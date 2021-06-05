@@ -1,6 +1,7 @@
 import React from 'react';
+import {string} from 'prop-types';
 
-function AdCard() {
+function Card({ title }) {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -31,7 +32,7 @@ function AdCard() {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="#">{title}</a>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
@@ -39,4 +40,8 @@ function AdCard() {
   );
 }
 
-export default AdCard;
+Card.propTypes = {
+  title: string.isRequired,
+};
+
+export default Card;

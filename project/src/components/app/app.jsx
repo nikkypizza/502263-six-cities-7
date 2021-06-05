@@ -1,15 +1,15 @@
 import React from 'react';
-import MainScreen from '../main-screen/main-screen.jsx';
-import PropTypes from 'prop-types';
+import {arrayOf, object} from 'prop-types';
+import MainPage from '../pages/main-page/main-page.jsx';
 
 function App({ ads }) {
   return (
-    <MainScreen ads={ads} />
+    <MainPage ads={ads} />
   );
 }
 
 App.propTypes = {
-  ads: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ads: arrayOf(object).isRequired,
 };
 
 export default App;

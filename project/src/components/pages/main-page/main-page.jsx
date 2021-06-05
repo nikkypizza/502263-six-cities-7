@@ -1,8 +1,8 @@
 import React from 'react';
-import AdList from '../ad-list/ad-list.jsx';
-import PropTypes from 'prop-types';
+import {arrayOf, object} from 'prop-types';
+import CardList from '../../card-list/card-list.jsx';
 
-function MainScreen({ ads }) {
+function MainPage({ ads }) {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -96,7 +96,9 @@ function MainScreen({ ads }) {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <AdList ads={ads} />
+
+                <CardList ads={ads} />
+
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
@@ -109,8 +111,8 @@ function MainScreen({ ads }) {
   );
 }
 
-MainScreen.propTypes = {
-  ads: PropTypes.arrayOf(PropTypes.object).isRequired,
+MainPage.propTypes = {
+  ads: arrayOf(object).isRequired,
 };
 
-export default MainScreen;
+export default MainPage;
