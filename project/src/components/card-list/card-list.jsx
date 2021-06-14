@@ -1,21 +1,31 @@
 import React from 'react';
-import {arrayOf, shape, string, number} from 'prop-types';
+
 import Card from '../card/card.jsx';
+import { arrayOf } from 'prop-types';
+
+import { adPropTypes } from '../../propTypes/ad.js';
 
 
 function CardList({ ads }) {
+  const [, setActiveOffer] = React.useState({
+    activeOfferId: null,
+  });
+
   return (
     <div className="cities__places-list places__list tabs__content">
-      {ads.map(({id, title}) => <Card key={id} title={title} />)}
+      {ads.map((it) => (
+        <Card
+          key={it.id}
+          data={it}
+          onMouseEnter={() => setActiveOffer({ activeOfferId: it.id })}
+          onMouseLeave={() => setActiveOffer({ activeOfferId: null })}
+        />))}
     </div>
   );
 }
 
 CardList.propTypes = {
-  ads: arrayOf(shape({
-    title: string.isRequired,
-    id: number,
-  })).isRequired,
+  ads: arrayOf(adPropTypes).isRequired,
 };
 
 export default CardList;

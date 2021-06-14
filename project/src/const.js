@@ -1,8 +1,10 @@
-export const AppRoute = {
+const AppRoute = {
   ROOT: '/',
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id?',
 };
 
-export const DISABLED_CLASSNAME = 'disabled';
+const DISABLED_CLASSNAME = 'disabled';
+
+export {AppRoute,DISABLED_CLASSNAME};
