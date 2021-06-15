@@ -7,9 +7,7 @@ import { adPropTypes } from '../../propTypes/ad.js';
 
 
 function CardList({ ads }) {
-  const [, setActiveOffer] = React.useState({
-    activeOfferId: null,
-  });
+  const [, setActiveOfferId] = React.useState(null);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -17,8 +15,8 @@ function CardList({ ads }) {
         <Card
           key={it.id}
           data={it}
-          onMouseEnter={() => setActiveOffer({ activeOfferId: it.id })}
-          onMouseLeave={() => setActiveOffer({ activeOfferId: null })}
+          onMouseEnter={() => setActiveOfferId(it.id)}
+          onMouseLeave={() => setActiveOfferId(null)}
         />))}
     </div>
   );

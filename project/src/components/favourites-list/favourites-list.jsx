@@ -1,13 +1,14 @@
 import React from 'react';
 import { arrayOf } from 'prop-types';
+
 import { adPropTypes } from '../../propTypes/ad.js';
 
-import FavouritesCard from '../favourites-card/favourites-card.jsx';
+import FavoritePlacesList from '../favourite-places-list/favourite-places-list.jsx';
 
 
 function FavoritesList({ ads }) {
   const adsSortedByCity = ads.reduce((acc, it) => {
-    if (!acc[it.city]) {acc[it.city] = [];}
+    if (!acc[it.city]) { acc[it.city] = []; }
     acc[it.city].push(it);
     return acc;
   }, {});
@@ -22,10 +23,7 @@ function FavoritesList({ ads }) {
               <a className="locations__item-link" href="#"><span>{key}</span></a>
             </div>
           </div>
-
-          <div className="favorites__places">
-            {value.map((it) => <FavouritesCard key={it.id} data={it} />)}
-          </div>
+          <FavoritePlacesList places={value} />
         </li>
       ))}
     </ul>

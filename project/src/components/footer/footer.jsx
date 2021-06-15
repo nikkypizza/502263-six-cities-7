@@ -1,17 +1,16 @@
 import React from 'react';
-import { node } from 'prop-types';
+
+import { logoNames } from '../logo/settings';
+
+import Logo from '../logo/logo';
 
 
-function Footer({ children }) {
+function Footer() {
   return (
     <footer className="footer container">
-      {children}
+      <Logo variant={logoNames.FOOTER} />
     </footer>
   );
 }
-
-Footer.propTypes = {
-  children: node,
-};
 
 export default Footer;

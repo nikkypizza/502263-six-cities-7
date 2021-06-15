@@ -16,18 +16,19 @@ import ReviewForm from '../../review-form/review-form.jsx';
 
 
 function OfferPage({ ad, reviews }) {
+  const {photos, title, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions} = ad;
   return (
     <div className="page">
       <Header isSignedIn />
       <main className="page__main page__main--property">
         <section className="property">
-          <ImagesList images={ad.photos.all} />
+          <ImagesList images={photos.all} />
           <div className="property__container container">
             <div className="property__wrapper">
-              {ad.isPremium && <PremiumTag variant={premiumTagNames.OFFER} />}
+              {isPremium && <PremiumTag variant={premiumTagNames.OFFER} />}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {ad.title}
+                  {title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -38,42 +39,42 @@ function OfferPage({ ad, reviews }) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: convertRatingToStars(ad.rating) }}></span>
+                  <span style={{ width: convertRatingToStars(rating) }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{ad.rating}</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {ad.offerType}
+                  {offerType}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {`${ad.bedroomsAmount} ${ad.bedroomsAmount === 1 ? 'Bedroom' : 'Bedrooms'}`}
+                  {`${bedroomsAmount} ${bedroomsAmount === 1 ? 'Bedroom' : 'Bedrooms'}`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {`Max ${ad.capacity} ${ad.capacity === 1 ? 'adult' : 'adults'}`}
+                  {`Max ${capacity} ${capacity === 1 ? 'adult' : 'adults'}`}
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{ad.price}</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <FeaturesList features={ad.features} />
+                <FeaturesList features={features} />
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper user__avatar-wrapper ${ad.host.isPro ? 'property__avatar-wrapper--pro' : ''}`}>
-                    <img className="property__avatar user__avatar" src={ad.host.userPic} width="74" height="74" alt={`Host ${ad.host.name}`} />
+                  <div className={`property__avatar-wrapper user__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''}`}>
+                    <img className="property__avatar user__avatar" src={host.userPic} width="74" height="74" alt={`Host ${host.name}`} />
                   </div>
                   <span className="property__user-name">
-                    {ad.host.name}
+                    {host.name}
                   </span>
-                  {ad.host.isPro && <span className="property__user-status">Pro</span>}
+                  {host.isPro && <span className="property__user-status">Pro</span>}
                 </div>
-                <DescriptionList descriptions={ad.descriptions} />
+                <DescriptionList descriptions={descriptions} />
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
