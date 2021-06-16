@@ -1,3 +1,5 @@
+const DISABLED_CLASSNAME = 'disabled';
+
 const AppRoute = {
   ROOT: '/',
   LOGIN: '/login',
@@ -5,6 +7,21 @@ const AppRoute = {
   OFFER: '/offer/:id?',
 };
 
-const DISABLED_CLASSNAME = 'disabled';
+const MapPinSetting = {
+  DEFAULT: {
+    iconUrl: 'img/pin.svg',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+  },
+};
 
-export {AppRoute,DISABLED_CLASSNAME};
+const MapCitySetting = {
+  AMSTERDAM: {
+    title: 'Amsterdam',
+    lat: 52.38333,
+    lng: 4.9,
+    zoom: 12,
+  },
+};
+
+export {AppRoute, DISABLED_CLASSNAME, MapPinSetting, MapCitySetting};

@@ -2,15 +2,16 @@ import React from 'react';
 import { arrayOf } from 'prop-types';
 
 import { adPropTypes } from '../../../propTypes/ad.js';
+import { MapCitySetting } from '../../../const';
 
 import Header from '../../header/header';
 import CardList from '../../card-list/card-list.jsx';
-
+import Map from '../../map/map.jsx';
 
 function MainPage({ ads }) {
   return (
     <div className="page page--gray page--main">
-      <Header/>
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -74,7 +75,9 @@ function MainPage({ ads }) {
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={MapCitySetting.AMSTERDAM} ads={ads} />
+              </section>
             </div>
           </div>
         </div>
