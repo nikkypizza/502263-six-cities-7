@@ -1,16 +1,18 @@
 import React from 'react';
 
 import Card from '../card/card.jsx';
-import { arrayOf } from 'prop-types';
+import { arrayOf, string } from 'prop-types';
 
 import { adPropTypes } from '../../propTypes/ad.js';
+import { CardListNames, componentVariants } from './settings.js';
 
 
-function CardList({ ads }) {
+function CardList({ ads, variant = CardListNames.MAIN_PAGE }) {
   const [, setActiveOfferId] = React.useState(null);
+  const { listClassName } = componentVariants[variant];
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={listClassName}>
       {ads.map((it) => (
         <Card
           key={it.id}
@@ -24,6 +26,7 @@ function CardList({ ads }) {
 
 CardList.propTypes = {
   ads: arrayOf(adPropTypes).isRequired,
+  variant: string,
 };
 
 export default CardList;

@@ -2,23 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { string, bool } from 'prop-types';
 
-import { componentVariants, logoNames } from './settings.js';
+import { componentVariants, LogoNames } from './settings.js';
 import { AppRoute, DISABLED_CLASSNAME } from '../../const.js';
 
 
-function Logo({ variant = logoNames.HEADER, isDisabled = false }) {
+function Logo({ variant = LogoNames.HEADER, isDisabled = false }) {
+  const {linkClassName, imgClassName, imgWidth, imgHeight} = componentVariants[variant];
   return (
     <Link
-      className={[componentVariants[variant].linkClassName, isDisabled ? DISABLED_CLASSNAME : ''].join(' ')}
+      className={[linkClassName, isDisabled ? DISABLED_CLASSNAME : ''].join(' ')}
       tabIndex={isDisabled ? '-1' : undefined}
       to={AppRoute.ROOT}
     >
       <img
-        className={componentVariants[variant].imgClassName}
+        className={imgClassName}
         src="img/logo.svg"
         alt="6 cities logo"
-        width={componentVariants[variant].imgWidth}
-        height={componentVariants[variant].imgHeight}
+        width={imgWidth}
+        height={imgHeight}
       />
     </Link>
   );

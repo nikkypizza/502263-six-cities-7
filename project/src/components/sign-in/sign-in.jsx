@@ -3,23 +3,21 @@ import { bool } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { AppRoute, DISABLED_CLASSNAME } from '../../const';
+import { componentVariants, SignInNames } from './settings';
 
 
 function SignIn({ isSignedIn = false }) {
+  const { actionLinkHref, textNodeClassname } = componentVariants[isSignedIn ? SignInNames.SIGNED_IN : SignInNames.NOT_SIGNED_IN];
   return (
     <ul className="header__nav-list">
 
       <li className="header__nav-item user">
-        {isSignedIn ?
-          <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile" >
-            <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-          </Link>
-          :
-          <Link to={AppRoute.LOGIN} className={`header__nav-link header__nav-link--profile ${window.location.pathname === AppRoute.LOGIN ? DISABLED_CLASSNAME : ''}`} >
-            <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-            <span className="header__login">Sign in</span>
-          </Link>}
+        <Link to={actionLinkHref} className={`header__nav-link header__nav-link--profile ${!isSignedIn && window.location.pathname === AppRoute.LOGIN ? DISABLED_CLASSNAME : ''}`} >
+          <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+          <span className={textNodeClassname}>
+            {isSignedIn ? 'Oliver.conner@gmail.com' : 'Sign in'}
+          </span>
+        </Link>
       </li>
 
       {isSignedIn &&

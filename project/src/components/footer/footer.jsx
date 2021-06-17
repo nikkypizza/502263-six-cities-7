@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { logoNames } from '../logo/settings';
+import { LogoNames } from '../logo/settings';
 
 import Logo from '../logo/logo';
 
@@ -8,7 +8,7 @@ import Logo from '../logo/logo';
 function Footer() {
   return (
     <footer className="footer container">
-      <Logo variant={logoNames.FOOTER} />
+      <Logo variant={LogoNames.FOOTER} />
     </footer>
   );
 }

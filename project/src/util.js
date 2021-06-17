@@ -4,7 +4,7 @@ const convertRatingToStars = (rating) => {
 };
 
 const getSettingsVariantNames = (variants) => Object.keys(variants).reduce((acc, it) => {
-  acc[it.toUpperCase()] = it;
+  acc[it.replace(/[A-Z]/g, (uppercaseLetter) => `_${uppercaseLetter}`).toUpperCase()] = it;
   return acc;
 }, {});
 

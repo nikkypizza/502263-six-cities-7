@@ -9,6 +9,6 @@ const componentVariants = {
   },
 };
 
-const premiumTagNames = getSettingsVariantNames(componentVariants);
+const PremiumTagNames = getSettingsVariantNames(componentVariants);
 
-export {componentVariants, premiumTagNames};
+export {componentVariants, PremiumTagNames};

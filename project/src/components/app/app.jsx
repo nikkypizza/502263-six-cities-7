@@ -5,6 +5,7 @@ import { arrayOf } from 'prop-types';
 import { AppRoute } from '../../const.js';
 import { adPropTypes } from '../../propTypes/ad.js';
 import { reviewPropTypes } from '../../propTypes/review.js';
+import { OFFERS_NEAR_DATA } from '../../mocks/offers-near.js';
 
 import MainPage from '../pages/main-page/main-page.jsx';
 import LoginPage from '../pages/login-page/login-page.jsx';
@@ -31,7 +32,7 @@ function App({ ads, reviews }) {
         </Route>
 
         <Route path={AppRoute.OFFER} exact>
-          <OfferPage ad={ads[1]} reviews={reviews}/>
+          <OfferPage ad={ads[1]} reviews={reviews} adsNear={OFFERS_NEAR_DATA}/>
         </Route>
 
         <Route>
