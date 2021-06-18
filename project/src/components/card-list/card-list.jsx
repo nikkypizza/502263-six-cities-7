@@ -9,14 +9,15 @@ import { CardListNames, componentVariants } from './settings.js';
 
 function CardList({ ads, variant = CardListNames.MAIN_PAGE }) {
   const [, setActiveOfferId] = React.useState(null);
-  const { listClassName } = componentVariants[variant];
+  const { listClassNameMod } = componentVariants[variant];
 
   return (
-    <div className={listClassName}>
+    <div className={`${listClassNameMod} places__list`}>
       {ads.map((it) => (
         <Card
           key={it.id}
           data={it}
+          variant={variant}
           onMouseEnter={() => setActiveOfferId(it.id)}
           onMouseLeave={() => setActiveOfferId(null)}
         />))}

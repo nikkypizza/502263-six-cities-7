@@ -2,10 +2,10 @@ import {getSettingsVariantNames} from '../../util';
 
 const componentVariants = {
   mainPage: {
-    listClassName: 'cities__places-list places__list tabs__content',
+    listClassNameMod: 'cities__places-list tabs__content',
   },
   offerPage: {
-    listClassName: 'near-places__list places__list',
+    listClassNameMod: 'near-places__list',
   },
 };
 
