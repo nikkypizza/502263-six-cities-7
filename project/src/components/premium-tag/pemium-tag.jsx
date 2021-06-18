@@ -1,12 +1,13 @@
 import { string } from 'prop-types';
 import React from 'react';
 
-import {componentVariants, premiumTagNames} from './settings.js';
+import {componentVariants, PremiumTagNames} from './settings.js';
 
 
-function PremiumTag({ variant = premiumTagNames.MAIN}) {
+function PremiumTag({ variant = PremiumTagNames.MAIN}) {
+  const {className} = componentVariants[variant];
   return (
-    <div className={componentVariants[variant].className}>
+    <div className={className}>
       <span>Premium</span>
     </div>
   );

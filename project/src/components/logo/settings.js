@@ -15,6 +15,6 @@ const componentVariants = {
   },
 };
 
-const logoNames = getSettingsVariantNames(componentVariants);
+const LogoNames = getSettingsVariantNames(componentVariants);
 
-export {componentVariants, logoNames};
+export {componentVariants, LogoNames};
