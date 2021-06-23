@@ -17,11 +17,14 @@ function Map({ city, ads }) {
 
   useEffect(() => {
     if (map) {
+      mapRef.current.querySelectorAll('.leaflet-marker-icon').forEach((it) => it.remove());
+
+      map.panTo(city);
       ads.forEach((it) => {
         const { lat, lng } = it.address;
 
         leaflet
-          .marker([lat, lng], {icon: defaultIcon})
+          .marker([lat, lng], { icon: defaultIcon })
           .addTo(map);
       });
     }
