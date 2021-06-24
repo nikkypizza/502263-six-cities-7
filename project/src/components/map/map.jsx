@@ -17,16 +17,20 @@ function Map({ city, ads }) {
 
   useEffect(() => {
     if (map) {
-      mapRef.current.querySelectorAll('.leaflet-marker-icon').forEach((it) => it.remove());
+      const markers = leaflet.layerGroup();
 
-      map.panTo(city);
-      ads.forEach((it) => {
-        const { lat, lng } = it.address;
+      ads.forEach(({address}) => {
+        const { lat, lng } = address;
 
         leaflet
           .marker([lat, lng], { icon: defaultIcon })
-          .addTo(map);
+          .addTo(markers);
       });
+
+      markers.addTo(map);
+      map.panTo(city);
+
+      return () => markers.clearLayers();
     }
   }, [map, ads]);
 

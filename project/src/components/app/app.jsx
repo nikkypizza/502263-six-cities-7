@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { arrayOf } from 'prop-types';
 
-import { AppRoute, DEFAULT_CITY } from '../../const.js';
+import { AppRoute } from '../../const.js';
 import { adPropTypes } from '../../propTypes/ad.js';
 import { reviewPropTypes } from '../../propTypes/review.js';
 import { OFFERS_NEAR_DATA } from '../../mocks/offers-near.js';
@@ -20,7 +20,7 @@ function App({ ads, reviews }) {
       <Switch>
 
         <Route path={AppRoute.ROOT} exact>
-          <MainPage ads={ads} activeCity={DEFAULT_CITY}/>
+          <MainPage />
         </Route>
 
         <Route path={AppRoute.LOGIN} exact>
@@ -28,11 +28,11 @@ function App({ ads, reviews }) {
         </Route>
 
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoritesPage ads={ads}/>
+          <FavoritesPage ads={ads} />
         </Route>
 
         <Route path={AppRoute.OFFER} exact>
-          <OfferPage ad={ads[1]} reviews={reviews} adsNear={OFFERS_NEAR_DATA}/>
+          <OfferPage ad={ads[1]} reviews={reviews} adsNear={OFFERS_NEAR_DATA} />
         </Route>
 
         <Route>

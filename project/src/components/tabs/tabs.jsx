@@ -25,7 +25,7 @@ Tabs.propTypes = {
   changeCity: func,
 };
 
-const mapStateToProps = ({ activeCity}) => ({ activeCity });
+const mapStateToProps = ({ activeCity }) => ({ activeCity });
 
 const mapDispatchToProps = (dispatch) => ({
   changeCity(city) {

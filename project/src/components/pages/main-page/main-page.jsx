@@ -19,7 +19,7 @@ function MainPage({ ads, activeCity }) {
       <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <Tabs cities={TABS_CITIES} activeCity={activeCity} />
+        <Tabs cities={TABS_CITIES}/>
         <div className="cities">
           <div className={`cities__places-container container ${ads.length ? '' : 'cities__places-container--empty'}`}>
             <section className={ads.length ? 'cities__places places' : 'cities__no-places'}>
