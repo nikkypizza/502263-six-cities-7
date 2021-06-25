@@ -53,8 +53,8 @@ const OFFERS_DATA = [{
   capacity: 9,
   features: ['Towels'],
   address: {
-    lat: 52.369553943508,
-    lng: 4.85309666406198,
+    lat: 48.869553943508,
+    lng: 2.35309666406198,
   },
   host: {
     name: 'Oleg',
@@ -82,8 +82,8 @@ const OFFERS_DATA = [{
   capacity: 13,
   features: ['Washing machine', 'Towels', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge', 'Wi-Fi'],
   address: {
-    lat: 52.3909553943508,
-    lng: 4.929309666406198,
+    lat: 48.8409553943508,
+    lng: 2.359309666406198,
   },
   host: {
     name: 'Paul',
@@ -93,7 +93,7 @@ const OFFERS_DATA = [{
 },
 {
   id: 4,
-  city: 'Moscow',
+  city: 'Hamburg',
   title: 'Place widh a view in the heart of the city',
   descriptions: ['Nice, cozy, warm big bed house', 'This building is green and from 18th century.'],
   photos: {
@@ -115,8 +115,8 @@ const OFFERS_DATA = [{
   capacity: 3,
   features: ['Towels', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge', 'Wi-Fi'],
   address: {
-    lat: 52.3809553943508,
-    lng: 4.939309666406198,
+    lat: 53.5409553943508,
+    lng: 9.999309666406198,
   },
   host: {
     name: 'Oleg Victorovich',

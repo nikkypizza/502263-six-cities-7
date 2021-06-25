@@ -20,7 +20,7 @@ function App({ ads, reviews }) {
       <Switch>
 
         <Route path={AppRoute.ROOT} exact>
-          <MainPage ads={ads} />
+          <MainPage />
         </Route>
 
         <Route path={AppRoute.LOGIN} exact>
@@ -28,11 +28,11 @@ function App({ ads, reviews }) {
         </Route>
 
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoritesPage ads={ads}/>
+          <FavoritesPage ads={ads} />
         </Route>
 
         <Route path={AppRoute.OFFER} exact>
-          <OfferPage ad={ads[1]} reviews={reviews} adsNear={OFFERS_NEAR_DATA}/>
+          <OfferPage ad={ads[1]} reviews={reviews} adsNear={OFFERS_NEAR_DATA} />
         </Route>
 
         <Route>

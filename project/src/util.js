@@ -13,4 +13,11 @@ const generateMonthYearDate = (date) => {
   return `${newDate.toLocaleString('en', { month: 'long' })} ${newDate.getFullYear()}`;
 };
 
-export {convertRatingToStars, getSettingsVariantNames, generateMonthYearDate};
+const filterAdsByCity = (ads, city) => ads.filter((it) => it.city === city);
+
+export {
+  convertRatingToStars,
+  getSettingsVariantNames,
+  generateMonthYearDate,
+  filterAdsByCity
+};

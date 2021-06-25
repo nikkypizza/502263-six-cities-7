@@ -17,13 +17,20 @@ function Map({ city, ads }) {
 
   useEffect(() => {
     if (map) {
-      ads.forEach((it) => {
-        const { lat, lng } = it.address;
+      const markers = leaflet.layerGroup();
+
+      ads.forEach(({address}) => {
+        const { lat, lng } = address;
 
         leaflet
-          .marker([lat, lng], {icon: defaultIcon})
-          .addTo(map);
+          .marker([lat, lng], { icon: defaultIcon })
+          .addTo(markers);
       });
+
+      markers.addTo(map);
+      map.panTo(city);
+
+      return () => markers.clearLayers();
     }
   }, [map, ads]);
 
