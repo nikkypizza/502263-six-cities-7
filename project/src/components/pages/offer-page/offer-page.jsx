@@ -3,7 +3,7 @@ import { adPropTypes } from '../../../propTypes/ad.js';
 import { arrayOf } from 'prop-types';
 
 import { reviewPropTypes } from '../../../propTypes/review.js';
-import { convertRatingToStars } from '../../../util.js';
+import { convertRatingToStars, getPluralNoun } from '../../../util.js';
 import { PremiumTagNames } from '../../premium-tag/settings.js';
 import { CardListNames } from '../../card-list/settings.js';
 import { MapCitySetting } from '../../../const.js';
@@ -20,7 +20,7 @@ import CardList from '../../card-list/card-list.jsx';
 
 
 function OfferPage({ ad, reviews, adsNear }) {
-  const {photos, title, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions} = ad;
+  const { photos, title, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions } = ad;
   return (
     <div className="page">
       <Header isSignedIn />
@@ -53,10 +53,10 @@ function OfferPage({ ad, reviews, adsNear }) {
                   {offerType}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {`${bedroomsAmount} ${bedroomsAmount === 1 ? 'Bedroom' : 'Bedrooms'}`}
+                  {`${bedroomsAmount} ${getPluralNoun(bedroomsAmount, 'Bedroom')}`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {`Max ${capacity} ${capacity === 1 ? 'adult' : 'adults'}`}
+                  {`Max ${capacity} ${getPluralNoun(capacity, 'adult')}`}
                 </li>
               </ul>
               <div className="property__price">
@@ -94,7 +94,7 @@ function OfferPage({ ad, reviews, adsNear }) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardList ads={adsNear} variant={CardListNames.OFFER_PAGE}/>
+            <CardList ads={adsNear} variant={CardListNames.OFFER_PAGE} />
           </section>
         </div>
       </main>
