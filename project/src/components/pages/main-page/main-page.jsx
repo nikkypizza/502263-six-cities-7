@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, string } from 'prop-types';
+import { arrayOf, number, string } from 'prop-types';
 
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { MapCitySetting, TABS_CITIES } from '../../../const';
@@ -13,13 +13,13 @@ import CityPlacesEmpty from '../../city-places-empty/city-places-empty.jsx';
 import Map from '../../map/map.jsx';
 
 
-function MainPage({ ads, activeCity }) {
+function MainPage({ ads, activeCity, focusedAdId }) {
   return (
     <div className="page page--gray page--main">
       <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <Tabs cities={TABS_CITIES}/>
+        <Tabs cities={TABS_CITIES} />
         <div className="cities">
           <div className={`cities__places-container container ${ads.length ? '' : 'cities__places-container--empty'}`}>
             <section className={ads.length ? 'cities__places places' : 'cities__no-places'}>
@@ -29,7 +29,7 @@ function MainPage({ ads, activeCity }) {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                {ads.length && <Map city={MapCitySetting[activeCity.toUpperCase()]} ads={ads} />}
+                {ads.length && <Map city={MapCitySetting[activeCity.toUpperCase()]} ads={ads} focusedAdId={focusedAdId} />}
               </section>
             </div>
           </div>
@@ -42,11 +42,13 @@ function MainPage({ ads, activeCity }) {
 MainPage.propTypes = {
   ads: arrayOf(adPropTypes).isRequired,
   activeCity: string,
+  focusedAdId: number,
 };
 
-const mapStateToProps = ({ ads, activeCity }) => ({
+const mapStateToProps = ({ ads, activeCity, focusedAdId }) => ({
   ads: filterAdsByCity(ads, activeCity),
   activeCity,
+  focusedAdId,
 });
 
 export { MainPage };

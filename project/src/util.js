@@ -15,9 +15,29 @@ const generateMonthYearDate = (date) => {
 
 const filterAdsByCity = (ads, city) => ads.filter((it) => it.city === city);
 
+const getPluralNoun = (int, noun) => `${noun}${int === 1 ? '' : 's'}`;
+
+const sortByKey = (arr, adSortingType) => {
+  switch (adSortingType) {
+    case 'priceAscending':
+      return arr.slice().sort((a, b) => a.price - b.price);
+
+    case 'priceDescending':
+      return arr.slice().sort((a, b) => b.price - a.price);
+
+    case 'ratingDescending':
+      return arr.slice().sort((a, b) => b.rating - a.rating);
+
+    default:
+      return arr;
+  }
+};
+
 export {
   convertRatingToStars,
   getSettingsVariantNames,
   generateMonthYearDate,
-  filterAdsByCity
+  getPluralNoun,
+  filterAdsByCity,
+  sortByKey
 };
