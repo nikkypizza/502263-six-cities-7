@@ -10,12 +10,12 @@ import { CardListNames, componentVariants } from './settings.js';
 import Card from '../card/card.jsx';
 
 
-function CardList({ ads, variant = CardListNames.MAIN_PAGE, adSortingType, changeFocusedAdId }) {
+function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId }) {
   const { listClassNameMod } = componentVariants[variant];
 
   return (
     <div className={`${listClassNameMod} places__list`}>
-      {sortByKey(ads, adSortingType).map((it) => (
+      {ads.map((it) => (
         <Card
           key={it.id}
           data={it}
@@ -31,10 +31,11 @@ CardList.propTypes = {
   ads: arrayOf(adPropTypes).isRequired,
   variant: string,
   changeFocusedAdId: func,
-  adSortingType: string,
 };
 
-const mapStateToProps = ({ adSortingType }) => ({ adSortingType });
+const mapStateToProps = (state, ownProps) => ({
+  ads: sortByKey(ownProps.ads, state.adSortingType),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   changeFocusedAdId(newId) {

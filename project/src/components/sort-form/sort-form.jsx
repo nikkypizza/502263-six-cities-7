@@ -13,7 +13,7 @@ function SortForm({ adSortingType, changeSortingType }) {
 
   return (
     <form
-      onMouseEnter={() => setIsOpen(true)}
+      onClick={() => setIsOpen(!isOpen)}
       onMouseLeave={() => setIsOpen(false)}
       className="places__sorting"
       action="#"
@@ -42,7 +42,7 @@ SortForm.propTypes = {
   changeSortingType: func,
 };
 
-const mapStateToProps = ({ ads, adSortingType }) => ({ ads, adSortingType });
+const mapStateToProps = ({ adSortingType }) => ({ adSortingType });
 
 const mapDispatchToProps = (dispatch) => ({
   changeSortingType(adSortingType) {
