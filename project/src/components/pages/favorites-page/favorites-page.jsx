@@ -1,5 +1,6 @@
 import React from 'react';
 import { arrayOf } from 'prop-types';
+import { connect } from 'react-redux';
 
 import { adPropTypes } from '../../../propTypes/ad.js';
 
@@ -20,7 +21,7 @@ function FavoritesPage({ ads }) {
           </section>
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
@@ -29,4 +30,7 @@ FavoritesPage.propTypes = {
   ads: arrayOf(adPropTypes).isRequired,
 };
 
-export default FavoritesPage;
+const mapStateToProps = ({ ads }) => ({ ads });
+
+export { FavoritesPage };
+export default connect(mapStateToProps)(FavoritesPage);

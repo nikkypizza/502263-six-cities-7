@@ -17,6 +17,7 @@ import ReviewsList from '../../reviews-list/reviews-list.jsx';
 import ReviewForm from '../../review-form/review-form.jsx';
 import Map from '../../map/map.jsx';
 import CardList from '../../card-list/card-list.jsx';
+import { connect } from 'react-redux';
 
 
 function OfferPage({ ad, reviews, adsNear }) {
@@ -108,4 +109,6 @@ OfferPage.propTypes = {
   adsNear: arrayOf(adPropTypes),
 };
 
-export default OfferPage;
+const mapStateToProps = ({ ads }) => ({ ad: ads[0] }); //  временный костыль пока не доберемся до этой страницы
+
+export default connect(mapStateToProps)(OfferPage);
