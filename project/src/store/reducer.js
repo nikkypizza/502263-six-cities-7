@@ -41,13 +41,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.ADS_ARE_LOADED:
       return {
         ...state,
-        adsAreLoaded: true,
-      };
-
-    case ActionType.ADS_NOT_LOADED:
-      return {
-        ...state,
-        adsAreLoaded: false,
+        adsAreLoaded: payload,
       };
 
     default:

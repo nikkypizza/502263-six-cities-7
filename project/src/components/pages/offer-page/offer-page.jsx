@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { arrayOf } from 'prop-types';
 
@@ -17,7 +18,6 @@ import ReviewsList from '../../reviews-list/reviews-list.jsx';
 import ReviewForm from '../../review-form/review-form.jsx';
 import Map from '../../map/map.jsx';
 import CardList from '../../card-list/card-list.jsx';
-import { connect } from 'react-redux';
 
 
 function OfferPage({ ad, reviews, adsNear }) {

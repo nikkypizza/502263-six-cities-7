@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, bool, number, string } from 'prop-types';
+import { arrayOf, bool, func, number, string } from 'prop-types';
 
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { MapCitySetting, TABS_CITIES } from '../../../const';
 import { filterAdsByCity } from '../../../util.js';
+import { fetchOffers } from '../../../api/api-actions.js';
 
 import LoadWrapper from '../../load-wrapper/load-wrapper.jsx';
 import Header from '../../header/header';
@@ -14,7 +15,12 @@ import CityPlacesEmpty from '../../city-places-empty/city-places-empty.jsx';
 import Map from '../../map/map.jsx';
 
 
-function MainPage({ ads, activeCity, focusedAdId, adsAreLoaded }) {
+function MainPage({ ads, activeCity, focusedAdId, adsAreLoaded, loadAds }) {
+
+  useEffect(() => {
+    !adsAreLoaded && loadAds();
+  }, []);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -47,6 +53,7 @@ MainPage.propTypes = {
   activeCity: string,
   focusedAdId: number,
   adsAreLoaded: bool,
+  loadAds: func,
 };
 
 const mapStateToProps = ({ ads, activeCity, focusedAdId, adsAreLoaded }) => ({
@@ -56,5 +63,11 @@ const mapStateToProps = ({ ads, activeCity, focusedAdId, adsAreLoaded }) => ({
   adsAreLoaded,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  loadAds() {
+    dispatch(fetchOffers());
+  },
+});
+
 export { MainPage };
-export default connect(mapStateToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

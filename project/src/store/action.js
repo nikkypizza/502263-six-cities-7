@@ -4,7 +4,6 @@ const ActionType = {
   CHANGE_SORTING_TYPE: 'CHANGE_SORTING_TYPE',
   LOAD_ADS: 'LOAD_ADS',
   ADS_ARE_LOADED: 'ADS_ARE_LOADED',
-  ADS_NOT_LOADED: 'ADS_NOT_LOADED',
 };
 
 const ActionCreator = {
@@ -24,11 +23,9 @@ const ActionCreator = {
     type: ActionType.LOAD_ADS,
     payload: ads,
   }),
-  adsAreLoaded: () => ({
+  adsAreLoaded: (bool) => ({
     type: ActionType.ADS_ARE_LOADED,
-  }),
-  adsNotLoaded: () => ({
-    type: ActionType.ADS_NOT_LOADED,
+    payload: bool,
   }),
 };
 

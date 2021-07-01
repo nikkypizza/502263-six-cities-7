@@ -6,9 +6,9 @@ const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.ADS)
     .then(({data}) => {
       dispatch(ActionCreator.loadAds(adaptAdsFormat(data)));
-      dispatch(ActionCreator.adsAreLoaded());
+      dispatch(ActionCreator.adsAreLoaded(true));
     }).catch((error) => {
-      dispatch(ActionCreator.adsNotLoaded());
+      dispatch(ActionCreator.adsAreLoaded(false));
       throw error;
     })
 );
