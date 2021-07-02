@@ -20,7 +20,7 @@ function Card({ data, variant, onMouseEnter, onMouseLeave }) {
       {isPremium && <PremiumTag />}
       <div className={`${imageWrapperClassNameMod} place-card__image-wrapper`}>
         <Link to={{ pathname: generatePath(AppRoute.OFFER, { id }) }}>
-          <img className="place-card__image" src={photos.main} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={photos.main} width="260" height="200" alt="Property view" />
         </Link>
       </div>
       <div className="place-card__info">

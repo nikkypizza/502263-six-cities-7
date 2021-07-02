@@ -1,12 +1,16 @@
 import React from 'react';
-import { arrayOf } from 'prop-types';
+import { arrayOf, func } from 'prop-types';
+import { Link } from 'react-router-dom';
 
+import { AppRoute } from '../../const.js';
 import { adPropTypes } from '../../propTypes/ad.js';
 
 import FavoritePlacesList from '../favourite-places-list/favourite-places-list.jsx';
+import { ActionCreator } from '../../store/action.js';
+import { connect } from 'react-redux';
 
 
-function FavoritesList({ ads }) {
+function FavoritesList({ ads, changeCity }) {
   const adsSortedByCity = ads.reduce((acc, it) => {
     if (!acc[it.city]) { acc[it.city] = []; }
     acc[it.city].push(it);
@@ -20,7 +24,9 @@ function FavoritesList({ ads }) {
 
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#"><span>{key}</span></a>
+              <Link className="locations__item-link" onClick={({ target }) => changeCity(target.textContent)} to={AppRoute.ROOT}>
+                <span>{key}</span>
+              </Link>
             </div>
           </div>
           <FavoritePlacesList places={value} />
@@ -32,6 +38,15 @@ function FavoritesList({ ads }) {
 
 FavoritesList.propTypes = {
   ads: arrayOf(adPropTypes),
+  changeCity: func,
 };
 
-export default FavoritesList;
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(newCity) {
+    dispatch(ActionCreator.changeCity(newCity));
+  },
+});
+
+
+export { FavoritesList };
+export default connect(null, mapDispatchToProps)(FavoritesList);

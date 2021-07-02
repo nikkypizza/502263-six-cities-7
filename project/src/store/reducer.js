@@ -1,5 +1,11 @@
-import { ActionType } from './action';
-import { DEFAULT_CITY, DEFAULT_SORTING_TYPE } from '../const';
+import {
+  ActionType
+} from './action';
+import {
+  AuthorizationStatus,
+  DEFAULT_CITY,
+  DEFAULT_SORTING_TYPE
+} from '../const';
 
 const initialState = {
   ads: [],
@@ -7,13 +13,18 @@ const initialState = {
   adSortingType: DEFAULT_SORTING_TYPE,
   focusedAdId: null,
   adsAreLoaded: false,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  authInfo: {},
 };
 
 
 const reducer = (state = initialState, action) => {
-  const {type, payload} = action;
+  const {
+    type,
+    payload,
+  } = action;
 
-  switch(type) {
+  switch (type) {
     case ActionType.CHANGE_CITY:
       return {
         ...state,
@@ -44,9 +55,29 @@ const reducer = (state = initialState, action) => {
         adsAreLoaded: payload,
       };
 
+    case ActionType.SET_AUTH_STATUS:
+      return {
+        ...state,
+        authorizationStatus: payload,
+      };
+
+    case ActionType.LOGIN:
+      return {
+        ...state,
+        authInfo: payload,
+      };
+
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authInfo: {},
+      };
+
     default:
       return state;
   }
 };
 
-export {reducer};
+export {
+  reducer
+};

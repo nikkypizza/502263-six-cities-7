@@ -11,6 +11,7 @@ import LoginPage from '../pages/login-page/login-page.jsx';
 import FavoritesPage from '../pages/favorites-page/favorites-page.jsx';
 import NotFoundPage from '../pages/not-found-page/not-found-page.jsx';
 import OfferPage from '../pages/offer-page/offer-page.jsx';
+import PrivateRoute from '../private-route/private-route.jsx';
 
 
 function App({ reviews }) {
@@ -26,9 +27,7 @@ function App({ reviews }) {
           <LoginPage />
         </Route>
 
-        <Route path={AppRoute.FAVORITES} exact>
-          <FavoritesPage />
-        </Route>
+        <PrivateRoute path={AppRoute.FAVORITES} render={() => <FavoritesPage />} exact />
 
         <Route path={AppRoute.OFFER} exact>
           <OfferPage reviews={reviews} adsNear={OFFERS_NEAR_DATA} />
