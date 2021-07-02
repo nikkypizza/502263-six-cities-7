@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { arrayOf } from 'prop-types';
 
@@ -108,4 +109,6 @@ OfferPage.propTypes = {
   adsNear: arrayOf(adPropTypes),
 };
 
-export default OfferPage;
+const mapStateToProps = ({ ads }) => ({ ad: ads[0] }); //  временный костыль пока не доберемся до этой страницы
+
+export default connect(mapStateToProps)(OfferPage);

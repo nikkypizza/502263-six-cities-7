@@ -2,9 +2,10 @@ import React from 'react';
 import { string, arrayOf } from 'prop-types';
 import { adPropTypes } from '../../propTypes/ad';
 
-import { getPluralNoun } from '../../util';
+import { getPluralNoun, sortByKey } from '../../util';
 import CardList from '../card-list/card-list';
 import SortForm from '../sort-form/sort-form';
+import { connect } from 'react-redux';
 
 
 function CityPlaces({ ads, activeCity }) {
@@ -23,6 +24,11 @@ CityPlaces.propTypes = {
   activeCity: string.isRequired,
 };
 
-export default CityPlaces;
+const mapStateToProps = (state, ownProps) => ({
+  ads: sortByKey(ownProps.ads, state.adSortingType),
+});
+
+export { CityPlaces };
+export default connect(mapStateToProps)(CityPlaces);
 
 

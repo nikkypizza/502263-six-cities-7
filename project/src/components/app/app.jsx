@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { arrayOf } from 'prop-types';
 
 import { AppRoute } from '../../const.js';
-import { adPropTypes } from '../../propTypes/ad.js';
 import { reviewPropTypes } from '../../propTypes/review.js';
 import { OFFERS_NEAR_DATA } from '../../mocks/offers-near.js';
 
@@ -14,7 +13,7 @@ import NotFoundPage from '../pages/not-found-page/not-found-page.jsx';
 import OfferPage from '../pages/offer-page/offer-page.jsx';
 
 
-function App({ ads, reviews }) {
+function App({ reviews }) {
   return (
     <BrowserRouter>
       <Switch>
@@ -28,11 +27,11 @@ function App({ ads, reviews }) {
         </Route>
 
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoritesPage ads={ads} />
+          <FavoritesPage />
         </Route>
 
         <Route path={AppRoute.OFFER} exact>
-          <OfferPage ad={ads[1]} reviews={reviews} adsNear={OFFERS_NEAR_DATA} />
+          <OfferPage reviews={reviews} adsNear={OFFERS_NEAR_DATA} />
         </Route>
 
         <Route>
@@ -45,7 +44,6 @@ function App({ ads, reviews }) {
 }
 
 App.propTypes = {
-  ads: arrayOf(adPropTypes).isRequired,
   reviews: arrayOf(reviewPropTypes),
 };
 
