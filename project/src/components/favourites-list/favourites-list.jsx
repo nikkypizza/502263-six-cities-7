@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, func } from 'prop-types';
+import { arrayOf, func, objectOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../const.js';
@@ -10,34 +10,31 @@ import { ActionCreator } from '../../store/action.js';
 import { connect } from 'react-redux';
 
 
-function FavoritesList({ ads, changeCity }) {
-  const adsSortedByCity = ads.reduce((acc, it) => {
-    if (!acc[it.city]) { acc[it.city] = []; }
-    acc[it.city].push(it);
-    return acc;
-  }, {});
-
+function FavoritesList({ adsObj, changeCity }) {
   return (
-    <ul className="favorites__list">
-      {Object.entries(adsSortedByCity).map(([key, value]) => (
-        <li key={key} className="favorites__locations-items">
+    <>
+      <h1 className="favorites__title">Saved listing</h1>
+      <ul className="favorites__list">
+        {Object.entries(adsObj).map(([key, value]) => (
+          <li key={key} className="favorites__locations-items">
 
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <Link className="locations__item-link" onClick={({ target }) => changeCity(target.textContent)} to={AppRoute.ROOT}>
-                <span>{key}</span>
-              </Link>
+            <div className="favorites__locations locations locations--current">
+              <div className="locations__item">
+                <Link className="locations__item-link" onClick={({ target }) => changeCity(target.textContent)} to={AppRoute.ROOT}>
+                  <span>{key}</span>
+                </Link>
+              </div>
             </div>
-          </div>
-          <FavoritePlacesList places={value} />
-        </li>
-      ))}
-    </ul>
+            <FavoritePlacesList places={value} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
 FavoritesList.propTypes = {
-  ads: arrayOf(adPropTypes),
+  adsObj: objectOf(arrayOf(adPropTypes)),
   changeCity: func,
 };
 

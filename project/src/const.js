@@ -38,6 +38,11 @@ const APIRoute = {
   LOGOUT: '/logout',
 };
 
+const UserRole = {
+  VISITOR: 'VISITOR',
+  USER: 'USER',
+};
+
 const MapPinSetting = {
   DEFAULT: {
     iconUrl: 'img/pin.svg',
@@ -102,5 +107,6 @@ export {
   DEFAULT_CITY,
   DEFAULT_SORTING_TYPE,
   SORTING_OPTIONS,
+  UserRole,
   AuthorizationStatus
 };

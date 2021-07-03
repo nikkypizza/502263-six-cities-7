@@ -33,11 +33,18 @@ const sortByKey = (arr, adSortingType) => {
   }
 };
 
+const getAdsByCityObj = (ads) => ads.reduce((acc, it) => {
+  if (!acc[it.city]) { acc[it.city] = []; }
+  acc[it.city].push(it);
+  return acc;
+}, {});
+
 export {
   convertRatingToStars,
   getSettingsVariantNames,
   generateMonthYearDate,
   getPluralNoun,
   filterAdsByCity,
-  sortByKey
+  sortByKey,
+  getAdsByCityObj
 };
