@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { arrayOf } from 'prop-types';
+import cn from 'classnames';
 
 import { reviewPropTypes } from '../../../propTypes/review.js';
 import { convertRatingToStars, getPluralNoun } from '../../../util.js';
@@ -71,7 +72,7 @@ function OfferPage({ ad, reviews, adsNear }) {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper user__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''}`}>
+                  <div className={cn('property__avatar-wrapper', 'user__avatar-wrapper', { 'property__avatar-wrapper--pro': host.isPro })}>
                     <img className="property__avatar user__avatar" src={host.userPic} width="74" height="74" alt={`Host ${host.name}`} />
                   </div>
                   <span className="property__user-name">

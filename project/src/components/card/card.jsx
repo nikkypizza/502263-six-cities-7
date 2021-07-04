@@ -1,6 +1,7 @@
 import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { func, string } from 'prop-types';
+import cn from 'classnames';
 
 import { adPropTypes } from '../../propTypes/ad.js';
 import { convertRatingToStars } from '../../util.js';
@@ -14,11 +15,11 @@ function Card({ data, variant, onMouseEnter, onMouseLeave }) {
   const { id, isPremium, price, photos, rating, title, offerType } = data;
   const { cardClassNameMod, imageWrapperClassNameMod } = componentVariants[variant];
   return (
-    <article className={`${cardClassNameMod} place-card`}
+    <article className={cn(cardClassNameMod, 'place-card')}
       onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
     >
       {isPremium && <PremiumTag />}
-      <div className={`${imageWrapperClassNameMod} place-card__image-wrapper`}>
+      <div className={cn(imageWrapperClassNameMod, 'place-card__image-wrapper')}>
         <Link to={{ pathname: generatePath(AppRoute.OFFER, { id }) }}>
           <img className="place-card__image" src={photos.main} width="260" height="200" alt="Property view" />
         </Link>

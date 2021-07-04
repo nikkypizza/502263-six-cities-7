@@ -1,14 +1,15 @@
 import React from 'react';
 import { arrayOf, objectOf } from 'prop-types';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import { adPropTypes } from '../../../propTypes/ad.js';
+import { getAdsByCityObj } from '../../../util.js';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favourites-list/favourites-list.jsx';
 import Footer from '../../footer/footer.jsx';
 import FavouritesListEmpty from '../../favourites-empty/favourites-empty.jsx';
-import { getAdsByCityObj } from '../../../util.js';
 
 
 function FavoritesPage({ adsObj }) {
@@ -18,7 +19,7 @@ function FavoritesPage({ adsObj }) {
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>
+          <section className={cn('favorites', { 'favorites--empty': isEmpty })}>
             {isEmpty ? <FavouritesListEmpty /> : <FavoritesList adsObj={adsObj} />}
           </section>
         </div>

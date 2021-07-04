@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, bool, func, number, string } from 'prop-types';
+import cn from 'classnames';
 
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { MapCitySetting, TABS_CITIES } from '../../../const';
@@ -27,7 +28,7 @@ function MainPage({ ads, activeCity, focusedAdId, adsAreLoaded, loadAds }) {
         <h1 className="visually-hidden">Cities</h1>
         <Tabs cities={TABS_CITIES} />
         <div className="cities">
-          <div className={`cities__places-container container ${ads.length ? '' : 'cities__places-container--empty'}`}>
+          <div className={cn('cities__places-container', 'container', {'cities__places-container--empty': !ads.length})}>
             <section className={ads.length ? 'cities__places places' : 'cities__no-places'}>
               <LoadWrapper isLoad={adsAreLoaded}>
                 {ads.length ?

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, func, string } from 'prop-types';
+import cn from 'classnames';
 
 import { ActionCreator } from '../../store/action.js';
 import { adPropTypes } from '../../propTypes/ad.js';
@@ -13,7 +14,7 @@ function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId })
   const { listClassNameMod } = componentVariants[variant];
 
   return (
-    <div className={`${listClassNameMod} places__list`}>
+    <div className={cn(listClassNameMod, 'places__list')}>
       {ads.map((it) => (
         <Card
           key={it.id}
