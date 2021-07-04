@@ -4,6 +4,9 @@ const ActionType = {
   CHANGE_SORTING_TYPE: 'CHANGE_SORTING_TYPE',
   LOAD_ADS: 'LOAD_ADS',
   ADS_ARE_LOADED: 'ADS_ARE_LOADED',
+  SET_AUTH_STATUS: 'SET_AUTH_STATUS',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
 };
 
 const ActionCreator = {
@@ -26,6 +29,18 @@ const ActionCreator = {
   adsAreLoaded: (bool) => ({
     type: ActionType.ADS_ARE_LOADED,
     payload: bool,
+  }),
+  setAuthStatus: (bool) => ({
+    type: ActionType.SET_AUTH_STATUS,
+    payload: bool,
+  }),
+  login: (userData) => ({
+    type: ActionType.LOGIN,
+    payload: userData,
+  }),
+  logout: (userData) => ({
+    type: ActionType.LOGOUT,
+    payload: userData,
   }),
 };
 

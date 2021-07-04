@@ -1,6 +1,7 @@
 const DISABLED_CLASSNAME = 'disabled';
 const TABS_CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 const DEFAULT_CITY = TABS_CITIES[0];
+const MAX_PHOTOS_IN_AD = 6;
 
 const SORTING_OPTIONS = [{
   title: 'Popular',
@@ -27,6 +28,19 @@ const AppRoute = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id?',
+};
+
+const APIRoute = {
+  ADS: '/hotels',
+  ADS_NEARBY: '/nearby',
+  REVIEWS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
+const UserRole = {
+  VISITOR: 'VISITOR',
+  USER: 'USER',
 };
 
 const MapPinSetting = {
@@ -75,13 +89,24 @@ const MapCitySetting = {
   },
 };
 
+const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+
 export {
   AppRoute,
+  APIRoute,
   DISABLED_CLASSNAME,
+  MAX_PHOTOS_IN_AD,
   MapPinSetting,
   MapCitySetting,
   TABS_CITIES,
   DEFAULT_CITY,
   DEFAULT_SORTING_TYPE,
-  SORTING_OPTIONS
+  SORTING_OPTIONS,
+  UserRole,
+  AuthorizationStatus
 };
