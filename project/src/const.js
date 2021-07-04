@@ -38,11 +38,6 @@ const APIRoute = {
   LOGOUT: '/logout',
 };
 
-const UserRole = {
-  VISITOR: 'VISITOR',
-  USER: 'USER',
-};
-
 const MapPinSetting = {
   DEFAULT: {
     iconUrl: 'img/pin.svg',
@@ -97,16 +92,15 @@ const AuthorizationStatus = {
 
 
 export {
-  AppRoute,
-  APIRoute,
+  DEFAULT_SORTING_TYPE,
   DISABLED_CLASSNAME,
   MAX_PHOTOS_IN_AD,
-  MapPinSetting,
-  MapCitySetting,
+  SORTING_OPTIONS,
   TABS_CITIES,
   DEFAULT_CITY,
-  DEFAULT_SORTING_TYPE,
-  SORTING_OPTIONS,
-  UserRole,
-  AuthorizationStatus
+  AuthorizationStatus,
+  MapPinSetting,
+  MapCitySetting,
+  AppRoute,
+  APIRoute
 };
