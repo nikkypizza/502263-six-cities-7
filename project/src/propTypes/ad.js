@@ -1,6 +1,6 @@
-import { arrayOf, shape, string, number, bool } from 'prop-types';
+import { arrayOf, shape, string, number, bool, object } from 'prop-types';
 
-const adPropTypes = shape({
+const adPropTypes = object || shape({
   id: number.isRequired,
   city: string.isRequired,
   title: string.isRequired,

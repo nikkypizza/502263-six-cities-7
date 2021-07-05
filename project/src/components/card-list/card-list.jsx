@@ -12,6 +12,7 @@ import Card from '../card/card.jsx';
 
 function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId }) {
   const { listClassNameMod } = componentVariants[variant];
+  const isMainPage = variant === CardListNames.MAIN_PAGE;
 
   return (
     <div className={cn(listClassNameMod, 'places__list')}>
@@ -20,8 +21,8 @@ function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId })
           key={it.id}
           data={it}
           variant={variant}
-          onMouseEnter={() => changeFocusedAdId(it.id)}
-          onMouseLeave={() => changeFocusedAdId(null)}
+          onMouseEnter={() => isMainPage && changeFocusedAdId(it.id)}
+          onMouseLeave={() => isMainPage && changeFocusedAdId(null)}
         />))}
     </div>
   );

@@ -1,11 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { arrayOf } from 'prop-types';
 
 import { AppRoute, AuthorizationStatus } from '../../const.js';
-import { reviewPropTypes } from '../../propTypes/review.js';
-import { OFFERS_NEAR_DATA } from '../../mocks/offers-near.js';
 
 import withPrivateRoute from '../../hoc/withPrivateRoute.jsx';
 import MainPage from '../pages/main-page/main-page.jsx';
@@ -15,7 +12,7 @@ import NotFoundPage from '../pages/not-found-page/not-found-page.jsx';
 import OfferPage from '../pages/offer-page/offer-page.jsx';
 import LoadWrapper from '../load-wrapper/load-wrapper.jsx';
 
-function App({ reviews }) {
+function App() {
   const authStatus = useSelector(({ authorizationStatus }) => authorizationStatus);
   const isAuthKnown = authStatus !== AuthorizationStatus.UNKNOWN;
 
@@ -50,9 +47,7 @@ function App({ reviews }) {
           </LoadWrapper>
         </Route>
 
-        <Route path={AppRoute.OFFER} exact>
-          <OfferPage reviews={reviews} adsNear={OFFERS_NEAR_DATA} />
-        </Route>
+        <Route exact path={`${AppRoute.OFFER}/:id`} render={({ match }) => <OfferPage adId={match.params.id} />} />
 
         <Route>
           <NotFoundPage />
@@ -62,9 +57,5 @@ function App({ reviews }) {
     </BrowserRouter>
   );
 }
-
-App.propTypes = {
-  reviews: arrayOf(reviewPropTypes),
-};
 
 export default App;
