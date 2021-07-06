@@ -7,9 +7,8 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(ActionCreator.loadAds(adaptAdsFormat(data)));
       dispatch(ActionCreator.adsAreLoaded(true));
-    }).catch((error) => {
+    }).catch((e) => {
       dispatch(ActionCreator.adsAreLoaded(false));
-      throw error;
     })
 );
 
@@ -49,6 +48,7 @@ const fetchFullAdInfo = (adId) => (dispatch, _getState, api) => (
       dispatch(ActionCreator.loadFullAdInfo(res.data));
       dispatch(ActionCreator.fullAdInfoLoaded(true));
     }).catch((e) => {
+      dispatch(ActionCreator.redirectTo(APIRoute.NOT_FOUND));
       dispatch(ActionCreator.fullAdInfoLoaded(false));
     })
 );
@@ -57,8 +57,6 @@ const fetchAdComments = (adId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.COMMENTS}/${adId}`)
     .then(({data}) => {
       dispatch(ActionCreator.loadAdComments(data));
-    }).catch((e) => {
-      throw e;
     })
 );
 
@@ -67,8 +65,6 @@ const fetchAdsNearby = (adId) => (dispatch, _getState, api) => {
   api.get(`${APIRoute.ADS}/${adId}${APIRoute.ADS_NEARBY}`)
     .then(({data}) => {
       dispatch(ActionCreator.loadAdsNearby(data));
-    }).catch((e) => {
-      throw e;
     });
 };
 

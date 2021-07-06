@@ -12,6 +12,7 @@ const ActionType = {
   LOAD_FULL_AD_INFO: 'LOAD_FULL_AD_INFO',
   LOAD_AD_COMMENTS: 'LOAD_AD_COMMENTS',
   LOAD_ADS_NEARBY: 'LOAD_ADS_NEARBY',
+  REDIRECT_TO: 'REDIRECT_TO',
 };
 
 const ActionCreator = {
@@ -66,6 +67,10 @@ const ActionCreator = {
   loadAdsNearby: (ads) => ({
     type: ActionType.LOAD_ADS_NEARBY,
     payload: ads,
+  }),
+  redirectTo: (path) => ({
+    type: ActionType.REDIRECT_TO,
+    payload: path,
   }),
 };
 

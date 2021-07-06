@@ -38,6 +38,7 @@ const APIRoute = {
   COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  NOT_FOUND: '/404',
 };
 
 const MapPinSetting = {
@@ -91,7 +92,6 @@ const AuthorizationStatus = {
   NO_AUTH: 'NO_AUTH',
   UNKNOWN: 'UNKNOWN',
 };
-
 
 export {
   DEFAULT_SORTING_TYPE,

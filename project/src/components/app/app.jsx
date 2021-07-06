@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../const.js';
+import browserHistory from '../../services/browser-history.js';
 
 import withPrivateRoute from '../../hoc/withPrivateRoute.jsx';
 import MainPage from '../pages/main-page/main-page.jsx';
@@ -28,7 +29,7 @@ function App() {
   );
 
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
 
         <Route path={AppRoute.ROOT} exact>
@@ -54,7 +55,7 @@ function App() {
         </Route>
 
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
 
