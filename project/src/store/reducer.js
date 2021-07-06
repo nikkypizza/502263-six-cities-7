@@ -13,6 +13,7 @@ const initialState = {
   fullAdInfo: {},
   adComments: [],
   adsNearby: [],
+  commentIsPosted: true,
 };
 
 
@@ -79,6 +80,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         fullAdInfoLoaded: payload,
       };
+
     case ActionType.LOAD_FULL_AD_INFO:
       return {
         ...state,
@@ -95,6 +97,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         adsNearby: payload,
+      };
+
+    case ActionType.SET_COMMENT_IS_POSTED:
+      return {
+        ...state,
+        commentIsPosted: payload,
       };
 
     default:

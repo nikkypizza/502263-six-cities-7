@@ -8,7 +8,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { setAuthStatus } from './api/api-actions.js';
 import { createApi } from './api/api.js';
 import { reducer } from './store/reducer';
-import redirect from './middlewares/redirect.js';
+import redirect from './store/middlewares/redirect';
+
 
 import App from './components/app/app';
 

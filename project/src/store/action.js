@@ -13,6 +13,8 @@ const ActionType = {
   LOAD_AD_COMMENTS: 'LOAD_AD_COMMENTS',
   LOAD_ADS_NEARBY: 'LOAD_ADS_NEARBY',
   REDIRECT_TO: 'REDIRECT_TO',
+  POST_COMMENT: 'POST_COMMENT',
+  SET_COMMENT_IS_POSTED: 'SET_COMMENT_IS_POSTED',
 };
 
 const ActionCreator = {
@@ -71,6 +73,10 @@ const ActionCreator = {
   redirectTo: (path) => ({
     type: ActionType.REDIRECT_TO,
     payload: path,
+  }),
+  setCommentIsPosted: (bool) => ({
+    type: ActionType.SET_COMMENT_IS_POSTED,
+    payload: bool,
   }),
 };
 

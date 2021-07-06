@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { arrayOf, bool } from 'prop-types';
+import { arrayOf, bool, string } from 'prop-types';
 import { convertRatingToStars, getPluralNoun } from '../../util.js';
 import { PremiumTagNames } from '../premium-tag/settings.js';
 import { adPropTypes } from '../../propTypes/ad.js';
@@ -18,7 +18,7 @@ import ReviewsList from '../reviews-list/reviews-list.jsx';
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from '../map/map.jsx';
 
-function OfferInfoWrapper({ info, reviews, adsNear, isAuth = false }) {
+function OfferInfoWrapper({ info, reviews, adsNear, adId, isAuth = false }) {
   const { photos, title, address, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions } = info;
 
   const getMapAds = () => {
@@ -87,7 +87,7 @@ function OfferInfoWrapper({ info, reviews, adsNear, isAuth = false }) {
             <section className="property__reviews reviews">
               {!!reviews.length && <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>}
               <ReviewsList reviews={reviews} />
-              {isAuth && <ReviewForm />}
+              {isAuth && <ReviewForm adId={adId} />}
             </section>
           </div>
         </div>
@@ -111,6 +111,7 @@ OfferInfoWrapper.propTypes = {
   adsNear: arrayOf(adPropTypes),
   info: adPropTypes,
   isAuth: bool.isRequired,
+  adId: string,
 };
 
 export default OfferInfoWrapper;

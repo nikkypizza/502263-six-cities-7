@@ -44,8 +44,8 @@ const logout = () => (dispatch, _getState, api) => (
 
 const fetchFullAdInfo = (adId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.ADS}/${adId}`)
-    .then((res) => {
-      dispatch(ActionCreator.loadFullAdInfo(res.data));
+    .then(({data}) => {
+      dispatch(ActionCreator.loadFullAdInfo(data));
       dispatch(ActionCreator.fullAdInfoLoaded(true));
     }).catch((e) => {
       dispatch(ActionCreator.redirectTo(APIRoute.NOT_FOUND));
@@ -60,11 +60,18 @@ const fetchAdComments = (adId) => (dispatch, _getState, api) => (
     })
 );
 
-
 const fetchAdsNearby = (adId) => (dispatch, _getState, api) => {
   api.get(`${APIRoute.ADS}/${adId}${APIRoute.ADS_NEARBY}`)
     .then(({data}) => {
       dispatch(ActionCreator.loadAdsNearby(data));
+    });
+};
+
+const postComment = (userComment, adId) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.COMMENTS}/${adId}`, userComment)
+    .then(({data}) => {
+      dispatch(ActionCreator.setCommentIsPosted(true));
+      dispatch(ActionCreator.loadAdComments(data));
     });
 };
 
@@ -75,5 +82,6 @@ export {
   logout,
   fetchAdsNearby,
   fetchFullAdInfo,
-  fetchAdComments
+  fetchAdComments,
+  postComment
 };

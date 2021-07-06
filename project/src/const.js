@@ -5,6 +5,11 @@ const MAX_PHOTOS_IN_AD = 6;
 const MAX_ADS_NEARBY = 3;
 const MAX_REVIEWS_IN_AD = 10;
 
+const CommentFormLength = {
+  MIN: 50,
+  MAX: 300,
+};
+
 const SORTING_OPTIONS = [{
   title: 'Popular',
   adSortingType: null,
@@ -102,6 +107,7 @@ export {
   SORTING_OPTIONS,
   TABS_CITIES,
   DEFAULT_CITY,
+  CommentFormLength,
   AuthorizationStatus,
   MapPinSetting,
   MapCitySetting,

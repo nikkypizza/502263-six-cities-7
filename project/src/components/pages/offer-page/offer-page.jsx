@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, bool, func, string } from 'prop-types';
 
+import { sortByDate } from '../../../util.js';
 import { AuthorizationStatus, MAX_REVIEWS_IN_AD, MAX_ADS_NEARBY } from '../../../const.js';
 import { fetchAdsNearby, fetchFullAdInfo, fetchAdComments } from '../../../api/api-actions.js';
 import { adPropTypes } from '../../../propTypes/ad.js';
@@ -29,7 +30,7 @@ function OfferPage({ adId, fullAdInfo, reviews, adsNear, fullAdInfoLoaded, setfu
       <Header isSignedIn />
       <main className="page__main page__main--property">
         <LoadWrapper isLoad={fullAdInfoLoaded}>
-          <OfferInfoWrapper info={fullAdInfo} reviews={reviews} adsNear={adsNear} isAuth={isAuth} />
+          <OfferInfoWrapper info={fullAdInfo} reviews={reviews} adsNear={adsNear} isAuth={isAuth} adId={adId} />
         </LoadWrapper>
       </main>
     </div>
@@ -51,7 +52,7 @@ OfferPage.propTypes = {
 
 const mapStateToProps = ({ fullAdInfoLoaded, authorizationStatus, fullAdInfo, adComments, adsNearby }) => ({
   fullAdInfo: Object.keys(fullAdInfo).length ? adaptAdsFormat([fullAdInfo])[0] : fullAdInfo,
-  reviews: adaptCommentsFormat(adComments.slice(0, MAX_REVIEWS_IN_AD)),
+  reviews: adaptCommentsFormat(sortByDate(adComments.slice(-MAX_REVIEWS_IN_AD))),
   adsNear: adaptAdsFormat(adsNearby.slice(0, MAX_ADS_NEARBY)),
   isAuth: authorizationStatus === AuthorizationStatus.AUTH,
   fullAdInfoLoaded,
