@@ -33,6 +33,8 @@ const sortByKey = (arr, adSortingType) => {
   }
 };
 
+const sortByDate = (arr) => arr.sort((a,b) => new Date(b.date) - new Date(a.date));
+
 const getAdsByCityObj = (ads) => ads.reduce((acc, it) => {
   if (!acc[it.city]) { acc[it.city] = []; }
   acc[it.city].push(it);
@@ -46,5 +48,6 @@ export {
   getPluralNoun,
   filterAdsByCity,
   sortByKey,
-  getAdsByCityObj
+  getAdsByCityObj,
+  sortByDate
 };

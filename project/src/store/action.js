@@ -7,6 +7,14 @@ const ActionType = {
   SET_AUTH_STATUS: 'SET_AUTH_STATUS',
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
+  LOAD_AD_DETAILS: 'LOAD_AD_DETAILS',
+  FULL_AD_INFO_LOADED: 'FULL_AD_INFO_LOADED',
+  LOAD_FULL_AD_INFO: 'LOAD_FULL_AD_INFO',
+  LOAD_AD_COMMENTS: 'LOAD_AD_COMMENTS',
+  LOAD_ADS_NEARBY: 'LOAD_ADS_NEARBY',
+  REDIRECT_TO: 'REDIRECT_TO',
+  POST_COMMENT: 'POST_COMMENT',
+  SET_COMMENT_IS_POSTED: 'SET_COMMENT_IS_POSTED',
 };
 
 const ActionCreator = {
@@ -42,6 +50,34 @@ const ActionCreator = {
     type: ActionType.LOGOUT,
     payload: userData,
   }),
+  loadAdDetails: (data) => ({
+    type: ActionType.LOAD_AD_DETAILS,
+    payload: data,
+  }),
+  fullAdInfoLoaded: (bool) => ({
+    type: ActionType.FULL_AD_INFO_LOADED,
+    payload: bool,
+  }),
+  loadFullAdInfo: (info) => ({
+    type: ActionType.LOAD_FULL_AD_INFO,
+    payload: info,
+  }),
+  loadAdComments: (comments) => ({
+    type: ActionType.LOAD_AD_COMMENTS,
+    payload: comments,
+  }),
+  loadAdsNearby: (ads) => ({
+    type: ActionType.LOAD_ADS_NEARBY,
+    payload: ads,
+  }),
+  redirectTo: (path) => ({
+    type: ActionType.REDIRECT_TO,
+    payload: path,
+  }),
+  setCommentIsPosted: (bool) => ({
+    type: ActionType.SET_COMMENT_IS_POSTED,
+    payload: bool,
+  }),
 };
 
-export {ActionType, ActionCreator};
+export { ActionType, ActionCreator };

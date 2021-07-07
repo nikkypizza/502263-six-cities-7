@@ -7,9 +7,8 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(ActionCreator.loadAds(adaptAdsFormat(data)));
       dispatch(ActionCreator.adsAreLoaded(true));
-    }).catch((error) => {
+    }).catch((e) => {
       dispatch(ActionCreator.adsAreLoaded(false));
-      throw error;
     })
 );
 
@@ -43,4 +42,46 @@ const logout = () => (dispatch, _getState, api) => (
     })
 );
 
-export { fetchOffers, setAuthStatus, login, logout };
+const fetchFullAdInfo = (adId) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.ADS}/${adId}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadFullAdInfo(data));
+      dispatch(ActionCreator.fullAdInfoLoaded(true));
+    }).catch((e) => {
+      dispatch(ActionCreator.redirectTo(APIRoute.NOT_FOUND));
+      dispatch(ActionCreator.fullAdInfoLoaded(false));
+    })
+);
+
+const fetchAdComments = (adId) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}/${adId}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadAdComments(data));
+    })
+);
+
+const fetchAdsNearby = (adId) => (dispatch, _getState, api) => {
+  api.get(`${APIRoute.ADS}/${adId}${APIRoute.ADS_NEARBY}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadAdsNearby(data));
+    });
+};
+
+const postComment = (userComment, adId) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.COMMENTS}/${adId}`, userComment)
+    .then(({data}) => {
+      dispatch(ActionCreator.setCommentIsPosted(true));
+      dispatch(ActionCreator.loadAdComments(data));
+    });
+};
+
+export {
+  fetchOffers,
+  setAuthStatus,
+  login,
+  logout,
+  fetchAdsNearby,
+  fetchFullAdInfo,
+  fetchAdComments,
+  postComment
+};

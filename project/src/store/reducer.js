@@ -1,11 +1,5 @@
-import {
-  ActionType
-} from './action';
-import {
-  AuthorizationStatus,
-  DEFAULT_CITY,
-  DEFAULT_SORTING_TYPE
-} from '../const';
+import { ActionType } from './action';
+import { AuthorizationStatus, DEFAULT_CITY, DEFAULT_SORTING_TYPE } from '../const';
 
 const initialState = {
   ads: [],
@@ -15,14 +9,16 @@ const initialState = {
   adsAreLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   authInfo: {},
+  fullAdInfoLoaded: false,
+  fullAdInfo: {},
+  adComments: [],
+  adsNearby: [],
+  commentIsPosted: true,
 };
 
 
 const reducer = (state = initialState, action) => {
-  const {
-    type,
-    payload,
-  } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case ActionType.CHANGE_CITY:
@@ -73,11 +69,45 @@ const reducer = (state = initialState, action) => {
         authInfo: {},
       };
 
+    case ActionType.LOAD_AD_DETAILS:
+      return {
+        ...state,
+        currentAdDetails: payload,
+      };
+
+    case ActionType.FULL_AD_INFO_LOADED:
+      return {
+        ...state,
+        fullAdInfoLoaded: payload,
+      };
+
+    case ActionType.LOAD_FULL_AD_INFO:
+      return {
+        ...state,
+        fullAdInfo: payload,
+      };
+
+    case ActionType.LOAD_AD_COMMENTS:
+      return {
+        ...state,
+        adComments: payload,
+      };
+
+    case ActionType.LOAD_ADS_NEARBY:
+      return {
+        ...state,
+        adsNearby: payload,
+      };
+
+    case ActionType.SET_COMMENT_IS_POSTED:
+      return {
+        ...state,
+        commentIsPosted: payload,
+      };
+
     default:
       return state;
   }
 };
 
-export {
-  reducer
-};
+export { reducer };

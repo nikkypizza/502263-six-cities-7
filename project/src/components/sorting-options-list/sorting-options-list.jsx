@@ -1,14 +1,16 @@
 import React from 'react';
 import { string, arrayOf, shape, bool, func } from 'prop-types';
+import cn from 'classnames';
+
 
 function SortingOptionsList({ isOpen, onClick, options, activeOption }) {
   return (
-    <ul className={`places__options places__options--custom  ${isOpen ? 'places__options--opened' : ''}`}>
+    <ul className={cn('places__options', 'places__options--custom', { 'places__options--opened': isOpen })}>
       {options.map(({ title, adSortingType }) => (
         <li
           key={title}
           onClick={() => onClick(adSortingType)}
-          className={`places__option ${adSortingType === activeOption ? 'places__option--active' : ''}`}
+          className={cn('places__option', { 'places__option--active': adSortingType === activeOption })}
           tabIndex="0"
         >
           {title}
