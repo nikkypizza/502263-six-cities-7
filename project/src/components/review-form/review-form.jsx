@@ -7,7 +7,8 @@ import { CommentFormLength, DISABLED_CLASSNAME } from '../../const.js';
 import { postComment } from '../../api/api-actions.js';
 
 import InputStarList from '../input-star-list/input-star-list.jsx';
-import { ActionCreator } from '../../store/action.js';
+import { setCommentIsPosted } from '../../store/action.js';
+import { getCommentIsPosted } from '../../store/user/selectors.js';
 
 
 function ReviewForm({ sendComment, adId, commentIsPosted }) {
@@ -58,12 +59,14 @@ ReviewForm.propTypes = {
   commentIsPosted: bool,
 };
 
-const mapStateToProps = ({ commentIsPosted }) => ({ commentIsPosted });
+const mapStateToProps = (state) => ({
+  commentIsPosted: getCommentIsPosted(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   sendComment(userInput, adId) {
     dispatch(postComment(userInput, adId));
-    dispatch(ActionCreator.setCommentIsPosted(false));
+    dispatch(setCommentIsPosted(false));
   },
 });
 

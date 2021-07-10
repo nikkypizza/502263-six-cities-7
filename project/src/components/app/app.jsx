@@ -12,9 +12,10 @@ import FavoritesPage from '../pages/favorites-page/favorites-page.jsx';
 import NotFoundPage from '../pages/not-found-page/not-found-page.jsx';
 import OfferPage from '../pages/offer-page/offer-page.jsx';
 import LoadWrapper from '../load-wrapper/load-wrapper.jsx';
+import { getAuthorizationStatus } from '../../store/user/selectors.js';
 
 function App() {
-  const authStatus = useSelector(({ authorizationStatus }) => authorizationStatus);
+  const authStatus = useSelector((state) => getAuthorizationStatus(state));
   const isAuthKnown = authStatus !== AuthorizationStatus.UNKNOWN;
 
   const LoginPagePrivate = withPrivateRoute(

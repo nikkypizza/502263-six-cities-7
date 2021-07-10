@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { func } from 'prop-types';
 
 import { login } from '../../../api/api-actions';
-import { ActionCreator } from '../../../store/action';
+import { changeCity } from '../../../store/action';
 import { AppRoute } from '../../../const';
 
 import Header from '../../header/header';
@@ -64,7 +64,7 @@ LoginPage.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   changeCity(newCity) {
-    dispatch(ActionCreator.changeCity(newCity));
+    dispatch(changeCity(newCity));
   },
   userLogin(data) {
     dispatch(login(data));

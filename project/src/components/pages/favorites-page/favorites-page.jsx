@@ -10,6 +10,7 @@ import Header from '../../header/header';
 import FavoritesList from '../../favourites-list/favourites-list.jsx';
 import Footer from '../../footer/footer.jsx';
 import FavouritesListEmpty from '../../favourites-empty/favourites-empty.jsx';
+import { getAds } from '../../../store/data/selectors.js';
 
 
 function FavoritesPage({ adsObj }) {
@@ -33,7 +34,9 @@ FavoritesPage.propTypes = {
   adsObj: objectOf(arrayOf(adPropTypes)),
 };
 
-const mapStateToProps = ({ ads }) => ({ adsObj: getAdsByCityObj(ads.filter((it) => it.isFavourite)) });
+const mapStateToProps = (state) => ({
+  adsObj: getAdsByCityObj(getAds(state).filter((it) => it.isFavourite)),
+});
 
 export { FavoritesPage };
 export default connect(mapStateToProps)(FavoritesPage);

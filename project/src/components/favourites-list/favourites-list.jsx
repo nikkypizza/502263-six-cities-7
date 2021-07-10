@@ -6,7 +6,7 @@ import { AppRoute } from '../../const.js';
 import { adPropTypes } from '../../propTypes/ad.js';
 
 import FavoritePlacesList from '../favourite-places-list/favourite-places-list.jsx';
-import { ActionCreator } from '../../store/action.js';
+import { changeCity } from '../../store/action.js';
 import { connect } from 'react-redux';
 
 
@@ -40,7 +40,7 @@ FavoritesList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   changeCity(newCity) {
-    dispatch(ActionCreator.changeCity(newCity));
+    dispatch(changeCity(newCity));
   },
 });
 

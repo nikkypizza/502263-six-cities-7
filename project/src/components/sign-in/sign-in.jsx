@@ -3,14 +3,15 @@ import { func, string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import { authInfoPropTypes } from '../../propTypes/authInfo';
+import { userInfoPropTypes } from '../../propTypes/userInfo';
 import { AppRoute, AuthorizationStatus, DISABLED_CLASSNAME } from '../../const';
 import { componentVariants, SignInNames } from './settings';
 import { connect } from 'react-redux';
 import { logout } from '../../api/api-actions';
+import { getAuthInfo, getAuthorizationStatus } from '../../store/user/selectors';
 
 
-function SignIn({ authorizationStatus, authInfo, logoutUser }) {
+function SignIn({ authorizationStatus, userInfo, logoutUser }) {
   const isSignedIn = authorizationStatus === AuthorizationStatus.AUTH;
   const { actionLinkHref, textNodeClassname } = componentVariants[isSignedIn ? SignInNames.SIGNED_IN : SignInNames.NOT_SIGNED_IN];
   return (
@@ -18,9 +19,9 @@ function SignIn({ authorizationStatus, authInfo, logoutUser }) {
 
       <li className="header__nav-item user">
         <Link to={actionLinkHref} className={cn('header__nav-link', 'header__nav-link--profile', !isSignedIn && window.location.pathname === AppRoute.LOGIN && DISABLED_CLASSNAME)} >
-          <div className="header__avatar-wrapper user__avatar-wrapper" style={authInfo.avatar_url && { backgroundImage: `url(${authInfo.avatar_url})` }}></div>
+          <div className="header__avatar-wrapper user__avatar-wrapper" style={userInfo.avatar_url && { backgroundImage: `url(${userInfo.avatar_url})` }}></div>
           <span className={textNodeClassname}>
-            {isSignedIn ? authInfo.email : 'Sign in'}
+            {isSignedIn ? userInfo.email : 'Sign in'}
           </span>
         </Link>
       </li>
@@ -37,11 +38,14 @@ function SignIn({ authorizationStatus, authInfo, logoutUser }) {
 
 SignIn.propTypes = {
   authorizationStatus: string.isRequired,
-  authInfo: authInfoPropTypes,
+  userInfo: userInfoPropTypes,
   logoutUser: func,
 };
 
-const mapStateToProps = ({ authorizationStatus, authInfo }) => ({ authorizationStatus, authInfo });
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  userInfo: getAuthInfo(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   logoutUser() {

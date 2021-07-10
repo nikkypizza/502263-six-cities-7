@@ -7,11 +7,13 @@ import { AuthorizationStatus, MAX_REVIEWS_IN_AD, MAX_ADS_NEARBY } from '../../..
 import { fetchAdsNearby, fetchFullAdInfo, fetchAdComments } from '../../../api/api-actions.js';
 import { adPropTypes } from '../../../propTypes/ad.js';
 import { reviewPropTypes } from '../../../propTypes/review.js';
-import { ActionCreator } from '../../../store/action.js';
+import { fullAdInfoLoaded } from '../../../store/action.js';
 
 import Header from '../../header/header';
 import LoadWrapper from '../../load-wrapper/load-wrapper.jsx';
 import OfferInfoWrapper from '../../offer-info-wrapper/offer-info-wrapper.jsx';
+import { getAdComments, getAdsNearby, getFullAdInfo, getFullAdInfoLoaded } from '../../../store/data/selectors.js';
+import { getAuthorizationStatus } from '../../../store/user/selectors.js';
 
 
 function OfferPage({ adId, fullAdInfo, reviews, adsNearby, fullAdInfoLoaded, setfullAdInfoLoaded, loadFullAdInfo, loadComments, loadAdsNearby, isAuth }) {
@@ -48,12 +50,12 @@ OfferPage.propTypes = {
   adId: string,
 };
 
-const mapStateToProps = ({ fullAdInfoLoaded, authorizationStatus, fullAdInfo, adComments, adsNearby }) => ({
-  reviews: sortByDate(adComments.slice(-MAX_REVIEWS_IN_AD)),
-  isAuth: authorizationStatus === AuthorizationStatus.AUTH,
-  adsNearby: adsNearby.slice(0, MAX_ADS_NEARBY),
-  fullAdInfo,
-  fullAdInfoLoaded,
+const mapStateToProps = (state) => ({
+  reviews: sortByDate(getAdComments(state).slice(-MAX_REVIEWS_IN_AD)),
+  isAuth: getAuthorizationStatus(state) === AuthorizationStatus.AUTH,
+  adsNearby: getAdsNearby(state).slice(0, MAX_ADS_NEARBY),
+  fullAdInfo: getFullAdInfo(state),
+  fullAdInfoLoaded: getFullAdInfoLoaded(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -67,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchAdsNearby(id));
   },
   setfullAdInfoLoaded(isLoaded) {
-    dispatch(ActionCreator.fullAdInfoLoaded(isLoaded));
+    dispatch(fullAdInfoLoaded(isLoaded));
   },
 });
 
