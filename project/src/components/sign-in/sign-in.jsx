@@ -18,9 +18,9 @@ function SignIn({ authorizationStatus, authInfo, logoutUser }) {
 
       <li className="header__nav-item user">
         <Link to={actionLinkHref} className={cn('header__nav-link', 'header__nav-link--profile', !isSignedIn && window.location.pathname === AppRoute.LOGIN && DISABLED_CLASSNAME)} >
-          <div className="header__avatar-wrapper user__avatar-wrapper" style={authInfo?.avatar_url && { backgroundImage: `url(${authInfo.avatar_url})` }}></div>
+          <div className="header__avatar-wrapper user__avatar-wrapper" style={authInfo.avatar_url && { backgroundImage: `url(${authInfo.avatar_url})` }}></div>
           <span className={textNodeClassname}>
-            {isSignedIn ? authInfo?.email : 'Sign in'}
+            {isSignedIn ? authInfo.email : 'Sign in'}
           </span>
         </Link>
       </li>

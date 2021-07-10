@@ -20,7 +20,7 @@ function ReviewForm({ sendComment, adId, commentIsPosted }) {
       formNode.current.reset();
       setFormData(initialState);
     }
-  }, [commentIsPosted, initialState]);
+  }, [commentIsPosted]);
 
   const onSubmit = (evt) => {
     evt.preventDefault();

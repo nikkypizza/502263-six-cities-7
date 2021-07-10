@@ -1,34 +1,31 @@
-const adaptAdsFormat = (arr) => arr.reduce((acc, it) => {
-  acc.push({
-    id: it.id,
-    city: it.city.name,
-    title: it.title,
-    descriptions: [it.description],
-    photos: {
-      main: it.preview_image,
-      all: it.images,
-    },
-    price: it.price,
-    rating: it.rating,
-    offerType: it.type,
-    isPremium: it.is_premium,
-    isFavourite: it.is_favorite,
-    bedroomsAmount: it.bedrooms,
-    capacity: it.max_adults,
-    features: it.goods,
-    address: {
-      lat: it.location.latitude,
-      lng: it.location.longitude,
-      zoom: it.location.zoom,
-    },
-    host: {
-      id: it.host.id,
-      name: it.host.name,
-      userPic: it.host.avatar_url,
-      isPro: it.host.is_pro,
-    },
-  });
-  return acc;
-}, []);
+const adaptAdFormat = (ad) => ({
+  id: ad.id,
+  city: ad.city.name,
+  title: ad.title,
+  descriptions: [ad.description],
+  photos: {
+    main: ad.preview_image,
+    all: ad.images,
+  },
+  price: ad.price,
+  rating: ad.rating,
+  offerType: ad.type,
+  isPremium: ad.is_premium,
+  isFavourite: ad.is_favorite,
+  bedroomsAmount: ad.bedrooms,
+  capacity: ad.max_adults,
+  features: ad.goods,
+  address: {
+    lat: ad.location.latitude,
+    lng: ad.location.longitude,
+    zoom: ad.location.zoom,
+  },
+  host: {
+    id: ad.host.id,
+    name: ad.host.name,
+    userPic: ad.host.avatar_url,
+    isPro: ad.host.is_pro,
+  },
+});
 
-export default adaptAdsFormat;
+export default adaptAdFormat;

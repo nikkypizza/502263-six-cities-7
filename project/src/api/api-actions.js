@@ -1,11 +1,12 @@
 import { ActionCreator } from '../store/action';
-import adaptAdsFormat from '../adapters/ads';
 import { APIRoute, AuthorizationStatus } from '../const';
+import adaptCommentFormat from '../adapters/comments';
+import adaptAdFormat from '../adapters/ads';
 
 const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.ADS)
     .then(({data}) => {
-      dispatch(ActionCreator.loadAds(adaptAdsFormat(data)));
+      dispatch(ActionCreator.loadAds(data.map(adaptAdFormat)));
       dispatch(ActionCreator.adsAreLoaded(true));
     }).catch((e) => {
       dispatch(ActionCreator.adsAreLoaded(false));
@@ -45,7 +46,7 @@ const logout = () => (dispatch, _getState, api) => (
 const fetchFullAdInfo = (adId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.ADS}/${adId}`)
     .then(({data}) => {
-      dispatch(ActionCreator.loadFullAdInfo(data));
+      dispatch(ActionCreator.loadFullAdInfo(adaptAdFormat(data)));
       dispatch(ActionCreator.fullAdInfoLoaded(true));
     }).catch((e) => {
       dispatch(ActionCreator.redirectTo(APIRoute.NOT_FOUND));
@@ -56,14 +57,14 @@ const fetchFullAdInfo = (adId) => (dispatch, _getState, api) => (
 const fetchAdComments = (adId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.COMMENTS}/${adId}`)
     .then(({data}) => {
-      dispatch(ActionCreator.loadAdComments(data));
+      dispatch(ActionCreator.loadAdComments(data.map(adaptCommentFormat)));
     })
 );
 
 const fetchAdsNearby = (adId) => (dispatch, _getState, api) => {
   api.get(`${APIRoute.ADS}/${adId}${APIRoute.ADS_NEARBY}`)
     .then(({data}) => {
-      dispatch(ActionCreator.loadAdsNearby(data));
+      dispatch(ActionCreator.loadAdsNearby(data.map(adaptAdFormat)));
     });
 };
 
