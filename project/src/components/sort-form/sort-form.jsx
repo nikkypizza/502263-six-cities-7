@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { string, func } from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { changeSortingType } from '../../store/action';
 import { SORTING_OPTIONS } from '../../const';
@@ -9,7 +8,9 @@ import SortingOptionsList from '../sorting-options-list/sorting-options-list';
 import { getAdSortingType } from '../../store/ui/selectors';
 
 
-function SortForm({ adSortingType, changeSortingType }) {
+function SortForm() {
+  const dispatch = useDispatch();
+  const adSortingType = useSelector(getAdSortingType);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,7 +31,7 @@ function SortForm({ adSortingType, changeSortingType }) {
 
       <SortingOptionsList
         isOpen={isOpen}
-        onClick={(sortingType) => changeSortingType(sortingType)}
+        onClick={(sortingType) => dispatch(changeSortingType(sortingType))}
         activeOption={adSortingType}
         options={SORTING_OPTIONS}
       />
@@ -38,23 +39,4 @@ function SortForm({ adSortingType, changeSortingType }) {
   );
 }
 
-SortForm.propTypes = {
-  adSortingType: string,
-  changeSortingType: func,
-};
-
-
-const mapStateToProps = (state) => ({
-  adSortingType: getAdSortingType(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeSortingType(adSortingType) {
-    dispatch(changeSortingType(adSortingType));
-  },
-});
-
-export { SortForm };
-export default connect(mapStateToProps, mapDispatchToProps)(SortForm);
-
-
+export default SortForm;

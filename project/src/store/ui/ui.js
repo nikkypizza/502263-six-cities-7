@@ -19,7 +19,7 @@ const ui = createReducer(initialState, (builder) => {
     })
     .addCase(changeSortingType, (state, action) => {
       state.adSortingType = action.payload;
-    })
+    });
 });
 
 export { ui };

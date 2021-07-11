@@ -1,31 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
-import { bool, func, string } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { string } from 'prop-types';
 import cn from 'classnames';
 
 import { CommentFormLength, DISABLED_CLASSNAME } from '../../const.js';
 import { postComment } from '../../api/api-actions.js';
-
-import InputStarList from '../input-star-list/input-star-list.jsx';
 import { setCommentIsPosted } from '../../store/action.js';
 import { getCommentIsPosted } from '../../store/user/selectors.js';
 
+import InputStarList from '../input-star-list/input-star-list.jsx';
 
-function ReviewForm({ sendComment, adId, commentIsPosted }) {
+
+function ReviewForm({ adId }) {
+  const dispatch = useDispatch();
+  const commentIsPosted = useSelector(getCommentIsPosted);
+
   const [initialState] = useState({ rating: null, comment: '' });
   const [formData, setFormData] = React.useState(initialState);
+
   const formNode = useRef('');
+
 
   useEffect(() => {
     if (commentIsPosted) {
       formNode.current.reset();
       setFormData(initialState);
     }
-  }, [commentIsPosted]);
+  }, [commentIsPosted, initialState]);
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    sendComment(formData, adId);
+    dispatch(postComment(formData, adId));
+    dispatch(setCommentIsPosted(false));
   };
 
   const getIsButtonDisabled = () => !(formData.rating && formData.comment.length >= CommentFormLength.MIN) || !commentIsPosted;
@@ -54,22 +60,7 @@ function ReviewForm({ sendComment, adId, commentIsPosted }) {
 }
 
 ReviewForm.propTypes = {
-  sendComment: func.isRequired,
   adId: string.isRequired,
-  commentIsPosted: bool,
 };
 
-const mapStateToProps = (state) => ({
-  commentIsPosted: getCommentIsPosted(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  sendComment(userInput, adId) {
-    dispatch(postComment(userInput, adId));
-    dispatch(setCommentIsPosted(false));
-  },
-});
-
-
-export { ReviewForm };
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

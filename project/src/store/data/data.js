@@ -32,7 +32,7 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(loadAdsNearby, (state, action) => {
       state.adsNearby = action.payload;
-    })
+    });
 });
 
 export { data };

@@ -21,6 +21,7 @@ const createApi = () => {
     config.headers['X-Token'] = localStorage.token;
     return config;
   });
+
   api.interceptors.response.use(onSuccess, onFail);
   return api;
 };

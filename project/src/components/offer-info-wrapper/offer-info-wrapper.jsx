@@ -18,6 +18,7 @@ import ReviewsList from '../reviews-list/reviews-list.jsx';
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from '../map/map.jsx';
 
+
 function OfferInfoWrapper({ info, reviews, adsNearby, adId, isAuth }) {
   const { photos, title, address, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions } = info;
 
