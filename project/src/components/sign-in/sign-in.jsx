@@ -16,12 +16,15 @@ function SignIn() {
 
   const isSignedIn = authorizationStatus === AuthorizationStatus.AUTH;
   const { actionLinkHref, textNodeClassname } = componentVariants[isSignedIn ? SignInNames.SIGNED_IN : SignInNames.NOT_SIGNED_IN];
+  const shouldLinkBeDisabled =
+    (!isSignedIn && window.location.pathname === AppRoute.LOGIN) ||
+    (isSignedIn && window.location.pathname === AppRoute.FAVORITES);
 
   return (
     <ul className="header__nav-list">
 
       <li className="header__nav-item user">
-        <Link to={actionLinkHref} className={cn('header__nav-link', 'header__nav-link--profile', !isSignedIn && window.location.pathname === AppRoute.LOGIN && DISABLED_CLASSNAME)} >
+        <Link to={actionLinkHref} className={cn('header__nav-link', 'header__nav-link--profile', shouldLinkBeDisabled && DISABLED_CLASSNAME)} >
           <div className="header__avatar-wrapper user__avatar-wrapper" style={userInfo?.avatar_url && { backgroundImage: `url(${userInfo?.avatar_url})` }}></div>
           <span className={textNodeClassname}>
             {isSignedIn ? userInfo?.email : 'Sign in'}

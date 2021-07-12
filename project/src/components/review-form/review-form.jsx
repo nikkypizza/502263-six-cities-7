@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { string } from 'prop-types';
 import cn from 'classnames';
@@ -63,4 +63,4 @@ ReviewForm.propTypes = {
   adId: string.isRequired,
 };
 
-export default ReviewForm;
+export default memo(ReviewForm);

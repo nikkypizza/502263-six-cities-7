@@ -1,5 +1,5 @@
+import React, { memo } from 'react';
 import { func, number, shape, string } from 'prop-types';
-import React from 'react';
 
 
 function InputStar({ data, onInput }) {
@@ -22,6 +22,4 @@ InputStar.propTypes = {
   onInput: func.isRequired,
 };
 
-export default InputStar;
-
-
+export default memo(InputStar);
