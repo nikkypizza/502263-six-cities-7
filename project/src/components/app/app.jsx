@@ -2,19 +2,21 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { AppRoute, AuthorizationStatus } from '../../const.js';
 import browserHistory from '../../services/browser-history.js';
+import { getAuthorizationStatus } from '../../store/user/selectors.js';
+import { AppRoute, AuthorizationStatus } from '../../const.js';
 
-import withPrivateRoute from '../../hoc/withPrivateRoute.jsx';
 import MainPage from '../pages/main-page/main-page.jsx';
 import LoginPage from '../pages/login-page/login-page.jsx';
 import FavoritesPage from '../pages/favorites-page/favorites-page.jsx';
 import NotFoundPage from '../pages/not-found-page/not-found-page.jsx';
 import OfferPage from '../pages/offer-page/offer-page.jsx';
 import LoadWrapper from '../load-wrapper/load-wrapper.jsx';
+import withPrivateRoute from '../../hocs/withPrivateRoute.jsx';
+
 
 function App() {
-  const authStatus = useSelector(({ authorizationStatus }) => authorizationStatus);
+  const authStatus = useSelector(getAuthorizationStatus);
   const isAuthKnown = authStatus !== AuthorizationStatus.UNKNOWN;
 
   const LoginPagePrivate = withPrivateRoute(

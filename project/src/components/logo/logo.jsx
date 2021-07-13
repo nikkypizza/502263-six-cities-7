@@ -8,7 +8,7 @@ import { AppRoute, DISABLED_CLASSNAME } from '../../const.js';
 
 
 function Logo({ variant = LogoNames.HEADER, isDisabled = false }) {
-  const {linkClassName, imgClassName, imgWidth, imgHeight} = componentVariants[variant];
+  const { linkClassName, imgClassName, imgWidth, imgHeight } = componentVariants[variant];
   return (
     <Link
       className={cn(linkClassName, isDisabled && DISABLED_CLASSNAME)}

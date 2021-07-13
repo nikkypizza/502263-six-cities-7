@@ -1,26 +1,26 @@
 import React, { useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { func } from 'prop-types';
 
 import { login } from '../../../api/api-actions';
-import { ActionCreator } from '../../../store/action';
+import { changeCity } from '../../../store/action';
 import { AppRoute } from '../../../const';
 
 import Header from '../../header/header';
 
 
-function LoginPage({ changeCity, userLogin }) {
+function LoginPage() {
+  const dispatch = useDispatch();
   const formNode = useRef('');
 
   const onSubmit = (evt) => {
     evt.preventDefault();
 
     const { email, password } = formNode.current;
-    userLogin({
+    dispatch(login({
       email: email.value,
       password: password.value,
-    });
+    }));
   };
 
   const onPasswordInput = (evt) => evt.target.value = evt.target.value.replace(/\s/g, '');
@@ -46,7 +46,7 @@ function LoginPage({ changeCity, userLogin }) {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" onClick={({ target }) => changeCity(target.textContent)} to={AppRoute.ROOT}>
+              <Link className="locations__item-link" onClick={({ target }) => dispatch(changeCity(target.textContent))} to={AppRoute.ROOT}>
                 <span>Amsterdam</span>
               </Link>
             </div>
@@ -57,19 +57,4 @@ function LoginPage({ changeCity, userLogin }) {
   );
 }
 
-LoginPage.propTypes = {
-  changeCity: func,
-  userLogin: func,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(newCity) {
-    dispatch(ActionCreator.changeCity(newCity));
-  },
-  userLogin(data) {
-    dispatch(login(data));
-  },
-});
-
-export { LoginPage };
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default LoginPage;

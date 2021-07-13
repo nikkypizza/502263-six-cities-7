@@ -1,18 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { arrayOf, func, string } from 'prop-types';
 import cn from 'classnames';
 
-import { ActionCreator } from '../../store/action.js';
 import { adPropTypes } from '../../propTypes/ad.js';
 import { CardListNames, componentVariants } from './settings.js';
 
 import Card from '../card/card.jsx';
 
 
-function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId }) {
+function CardList({ ads, variant = CardListNames.MAIN_PAGE, onMouseEnter = () => {}, onMouseLeave = () => {} }) {
   const { listClassNameMod } = componentVariants[variant];
-  const isMainPage = variant === CardListNames.MAIN_PAGE;
 
   return (
     <div className={cn(listClassNameMod, 'places__list')}>
@@ -21,8 +18,8 @@ function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId })
           key={it.id}
           data={it}
           variant={variant}
-          onMouseEnter={() => isMainPage && changeFocusedAdId(it.id)}
-          onMouseLeave={() => isMainPage && changeFocusedAdId(null)}
+          onMouseEnter={() => onMouseEnter(it.id)}
+          onMouseLeave={() => onMouseLeave(null)}
         />))}
     </div>
   );
@@ -31,14 +28,8 @@ function CardList({ ads, variant = CardListNames.MAIN_PAGE, changeFocusedAdId })
 CardList.propTypes = {
   ads: arrayOf(adPropTypes).isRequired,
   variant: string,
-  changeFocusedAdId: func,
+  onMouseEnter: func,
+  onMouseLeave: func,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  changeFocusedAdId(newId) {
-    dispatch(ActionCreator.changeFocusedAdId(newId));
-  },
-});
-
-export { CardList };
-export default connect(null, mapDispatchToProps)(CardList);
+export default CardList;

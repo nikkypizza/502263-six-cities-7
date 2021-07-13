@@ -33,7 +33,7 @@ const sortByKey = (arr, adSortingType) => {
   }
 };
 
-const sortByDate = (arr) => arr.sort((a,b) => new Date(b.date) - new Date(a.date));
+const sortByDate = (arr) => arr.slice().sort((a,b) => new Date(b.date) - new Date(a.date));
 
 const getAdsByCityObj = (ads) => ads.reduce((acc, it) => {
   if (!acc[it.city]) { acc[it.city] = []; }

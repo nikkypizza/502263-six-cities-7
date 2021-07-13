@@ -1,5 +1,5 @@
 import { func } from 'prop-types';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { STAR_TITLES } from './settings.js';
 
@@ -18,4 +18,4 @@ InputStarList.propTypes = {
   onInput: func,
 };
 
-export default InputStarList;
+export default memo(InputStarList);

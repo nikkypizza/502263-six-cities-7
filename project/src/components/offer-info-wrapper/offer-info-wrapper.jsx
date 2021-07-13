@@ -18,11 +18,12 @@ import ReviewsList from '../reviews-list/reviews-list.jsx';
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from '../map/map.jsx';
 
-function OfferInfoWrapper({ info, reviews, adsNear, adId, isAuth = false }) {
+
+function OfferInfoWrapper({ info, reviews, adsNearby, adId, isAuth }) {
   const { photos, title, address, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions } = info;
 
   const getMapAds = () => {
-    const mapAds = adsNear.slice();
+    const mapAds = adsNearby.slice();
     mapAds.push({ address });
     return mapAds;
   };
@@ -80,26 +81,26 @@ function OfferInfoWrapper({ info, reviews, adsNear, adId, isAuth = false }) {
                 <span className="property__user-name">
                   {host.name}
                 </span>
-                {host && <span className="property__user-status">Pro</span>}
+                {host.isPro && <span className="property__user-status">Pro</span>}
               </div>
               <DescriptionList descriptions={descriptions} />
             </div>
             <section className="property__reviews reviews">
-              {!!reviews.length && <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>}
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
               <ReviewsList reviews={reviews} />
               {isAuth && <ReviewForm adId={adId} />}
             </section>
           </div>
         </div>
-        {adsNear.length &&
+        {adsNearby.length &&
           <section className="property__map map">
             <Map city={address} ads={getMapAds()} />
           </section>}
       </section>
       <div className="container">
         <section className="near-places places">
-          {!!adsNear.length && <h2 className="near-places__title">Other places in the neighbourhood</h2>}
-          <CardList ads={adsNear} variant={CardListNames.OFFER_PAGE} />
+          {!!adsNearby.length && <h2 className="near-places__title">Other places in the neighbourhood</h2>}
+          <CardList ads={adsNearby} variant={CardListNames.OFFER_PAGE} />
         </section>
       </div>
     </>
@@ -108,7 +109,7 @@ function OfferInfoWrapper({ info, reviews, adsNear, adId, isAuth = false }) {
 
 OfferInfoWrapper.propTypes = {
   reviews: arrayOf(reviewPropTypes),
-  adsNear: arrayOf(adPropTypes),
+  adsNearby: arrayOf(adPropTypes),
   info: adPropTypes,
   isAuth: bool.isRequired,
   adId: string,

@@ -1,3 +1,5 @@
+import { createAction } from '@reduxjs/toolkit';
+
 const ActionType = {
   CHANGE_CITY: 'CHANGE_CITY',
   CHANGE_FOCUSED_AD_ID: 'CHANGE_FOCUSED_AD_ID',
@@ -17,67 +19,40 @@ const ActionType = {
   SET_COMMENT_IS_POSTED: 'SET_COMMENT_IS_POSTED',
 };
 
-const ActionCreator = {
-  changeCity: (newCity) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: newCity,
-  }),
-  changeFocusedAdId: (newId) => ({
-    type: ActionType.CHANGE_FOCUSED_AD_ID,
-    payload: newId,
-  }),
-  changeSortingType: (newType) => ({
-    type: ActionType.CHANGE_SORTING_TYPE,
-    payload: newType,
-  }),
-  loadAds: (ads) => ({
-    type: ActionType.LOAD_ADS,
-    payload: ads,
-  }),
-  adsAreLoaded: (bool) => ({
-    type: ActionType.ADS_ARE_LOADED,
-    payload: bool,
-  }),
-  setAuthStatus: (bool) => ({
-    type: ActionType.SET_AUTH_STATUS,
-    payload: bool,
-  }),
-  login: (userData) => ({
-    type: ActionType.LOGIN,
-    payload: userData,
-  }),
-  logout: (userData) => ({
-    type: ActionType.LOGOUT,
-    payload: userData,
-  }),
-  loadAdDetails: (data) => ({
-    type: ActionType.LOAD_AD_DETAILS,
-    payload: data,
-  }),
-  fullAdInfoLoaded: (bool) => ({
-    type: ActionType.FULL_AD_INFO_LOADED,
-    payload: bool,
-  }),
-  loadFullAdInfo: (info) => ({
-    type: ActionType.LOAD_FULL_AD_INFO,
-    payload: info,
-  }),
-  loadAdComments: (comments) => ({
-    type: ActionType.LOAD_AD_COMMENTS,
-    payload: comments,
-  }),
-  loadAdsNearby: (ads) => ({
-    type: ActionType.LOAD_ADS_NEARBY,
-    payload: ads,
-  }),
-  redirectTo: (path) => ({
-    type: ActionType.REDIRECT_TO,
-    payload: path,
-  }),
-  setCommentIsPosted: (bool) => ({
-    type: ActionType.SET_COMMENT_IS_POSTED,
-    payload: bool,
-  }),
-};
+const changeCity = createAction(ActionType.CHANGE_CITY, (newCity) => ({payload: newCity}));
+const changeFocusedAdId = createAction(ActionType.CHANGE_FOCUSED_AD_ID, (newId) => ({payload: newId}));
+const changeSortingType = createAction(ActionType.CHANGE_SORTING_TYPE, (newType) => ({payload: newType}));
 
-export { ActionType, ActionCreator };
+const loadAds = createAction(ActionType.LOAD_ADS, (ads) => ({payload: ads}));
+const adsAreLoaded = createAction(ActionType.ADS_ARE_LOADED, (bool) => ({payload: bool}));
+const loadAdDetails = createAction(ActionType.LOAD_AD_DETAILS, (data) => ({payload: data}));
+const loadFullAdInfo = createAction(ActionType.LOAD_FULL_AD_INFO, (info) => ({payload: info}));
+const fullAdInfoLoaded = createAction(ActionType.FULL_AD_INFO_LOADED, (bool) => ({payload: bool}));
+const loadAdComments = createAction(ActionType.LOAD_AD_COMMENTS, (comments) => ({payload: comments}));
+const loadAdsNearby = createAction(ActionType.LOAD_ADS_NEARBY, (ads) => ({payload: ads}));
+
+const login = createAction(ActionType.LOGIN, (userData) => ({payload: userData}));
+const logout = createAction(ActionType.LOGOUT, (userData) => ({payload: userData}));
+const setAuthStatus = createAction(ActionType.SET_AUTH_STATUS, (bool) => ({payload: bool}));
+const setCommentIsPosted = createAction(ActionType.SET_COMMENT_IS_POSTED, (bool) => ({payload: bool}));
+
+const redirectTo = createAction(ActionType.REDIRECT_TO, (path) => ({payload: path}));
+
+export {
+  ActionType,
+  changeCity,
+  changeFocusedAdId,
+  changeSortingType,
+  loadAds,
+  adsAreLoaded,
+  setAuthStatus,
+  login,
+  logout,
+  loadAdDetails,
+  fullAdInfoLoaded,
+  loadFullAdInfo,
+  loadAdComments,
+  loadAdsNearby,
+  redirectTo,
+  setCommentIsPosted
+};

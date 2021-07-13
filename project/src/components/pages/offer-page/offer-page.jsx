@@ -1,36 +1,41 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { arrayOf, bool, func, string } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { string } from 'prop-types';
 
-import { sortByDate } from '../../../util.js';
-import { AuthorizationStatus, MAX_REVIEWS_IN_AD, MAX_ADS_NEARBY } from '../../../const.js';
+import { AuthorizationStatus } from '../../../const.js';
+import { getFullAdInfo, getFullAdInfoLoaded, getLimitedAdsNearby, getLimitedSortedComments } from '../../../store/data/selectors.js';
 import { fetchAdsNearby, fetchFullAdInfo, fetchAdComments } from '../../../api/api-actions.js';
-import { adPropTypes } from '../../../propTypes/ad.js';
-import { reviewPropTypes } from '../../../propTypes/review.js';
-import adaptCommentsFormat from '../../../adapters/comments.js';
-import adaptAdsFormat from '../../../adapters/ads.js';
-import { ActionCreator } from '../../../store/action.js';
+import { fullAdInfoLoaded as setFullAdInfoLoaded } from '../../../store/action.js';
+import { getAuthorizationStatus } from '../../../store/user/selectors.js';
 
 import Header from '../../header/header';
 import LoadWrapper from '../../load-wrapper/load-wrapper.jsx';
 import OfferInfoWrapper from '../../offer-info-wrapper/offer-info-wrapper.jsx';
 
 
-function OfferPage({ adId, fullAdInfo, reviews, adsNear, fullAdInfoLoaded, setfullAdInfoLoaded, loadFullAdInfo, loadComments, loadAdsNearby, isAuth }) {
-  useEffect(() => {
-    loadFullAdInfo(adId);
-    loadComments(adId);
-    loadAdsNearby(adId);
+function OfferPage({ adId }) {
+  const dispatch = useDispatch();
 
-    return () => setfullAdInfoLoaded(false);
-  }, [loadAdsNearby, loadComments, loadFullAdInfo, setfullAdInfoLoaded, adId]);
+  const reviews = useSelector(getLimitedSortedComments);
+  const adsNearby = useSelector(getLimitedAdsNearby);
+  const authStatus = useSelector(getAuthorizationStatus);
+  const fullAdInfo = useSelector(getFullAdInfo);
+  const fullAdInfoLoaded = useSelector(getFullAdInfoLoaded);
+
+  useEffect(() => {
+    dispatch(fetchFullAdInfo(adId));
+    dispatch(fetchAdComments(adId));
+    dispatch(fetchAdsNearby(adId));
+
+    return () => dispatch(setFullAdInfoLoaded(false));
+  }, [adId, dispatch]);
 
   return (
     <div className="page">
       <Header isSignedIn />
       <main className="page__main page__main--property">
         <LoadWrapper isLoad={fullAdInfoLoaded}>
-          <OfferInfoWrapper info={fullAdInfo} reviews={reviews} adsNear={adsNear} isAuth={isAuth} adId={adId} />
+          <OfferInfoWrapper info={fullAdInfo} reviews={reviews} adsNearby={adsNearby} isAuth={authStatus === AuthorizationStatus.AUTH} adId={adId} />
         </LoadWrapper>
       </main>
     </div>
@@ -38,40 +43,7 @@ function OfferPage({ adId, fullAdInfo, reviews, adsNear, fullAdInfoLoaded, setfu
 }
 
 OfferPage.propTypes = {
-  reviews: arrayOf(reviewPropTypes),
-  adsNear: arrayOf(adPropTypes),
-  fullAdInfo: adPropTypes,
-  fullAdInfoLoaded: bool,
-  setfullAdInfoLoaded: func,
-  loadFullAdInfo: func,
-  loadComments: func,
-  loadAdsNearby: func,
-  isAuth: bool.isRequired,
   adId: string,
 };
 
-const mapStateToProps = ({ fullAdInfoLoaded, authorizationStatus, fullAdInfo, adComments, adsNearby }) => ({
-  fullAdInfo: Object.keys(fullAdInfo).length ? adaptAdsFormat([fullAdInfo])[0] : fullAdInfo,
-  reviews: adaptCommentsFormat(sortByDate(adComments.slice(-MAX_REVIEWS_IN_AD))),
-  adsNear: adaptAdsFormat(adsNearby.slice(0, MAX_ADS_NEARBY)),
-  isAuth: authorizationStatus === AuthorizationStatus.AUTH,
-  fullAdInfoLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadFullAdInfo(id) {
-    dispatch(fetchFullAdInfo(id));
-  },
-  loadComments(id) {
-    dispatch(fetchAdComments(id));
-  },
-  loadAdsNearby(id) {
-    dispatch(fetchAdsNearby(id));
-  },
-  setfullAdInfoLoaded(isLoaded) {
-    dispatch(ActionCreator.fullAdInfoLoaded(isLoaded));
-  },
-});
-
-export { OfferPage };
-export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
+export default OfferPage;

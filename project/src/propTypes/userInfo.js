@@ -1,6 +1,6 @@
 import { shape, string, number, bool } from 'prop-types';
 
-const authInfoPropTypes = shape({
+const userInfoPropTypes = shape({
   id: number,
   email: string,
   name: string,
@@ -10,4 +10,4 @@ const authInfoPropTypes = shape({
 });
 
 
-export {authInfoPropTypes};
+export {userInfoPropTypes};

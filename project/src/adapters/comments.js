@@ -1,17 +1,14 @@
-const adaptCommentsFormat = (arr) => arr.reduce((acc, it) => {
-  acc.push({
-    id: it.id,
-    author: {
-      id: it.user.id,
-      name: it.user.name,
-      userPic: it.user.avatar_url,
-      isPro: it.user.is_pro,
-    },
-    rating: it.rating,
-    date: it.date,
-    review: it.comment,
-  });
-  return acc;
-}, []);
+const adaptCommentFormat = (comment) => ({
+  id: comment.id,
+  author: {
+    id: comment.user.id,
+    name: comment.user.name,
+    userPic: comment.user.avatar_url,
+    isPro: comment.user.is_pro,
+  },
+  rating: comment.rating,
+  date: comment.date,
+  review: comment.comment,
+});
 
-export default adaptCommentsFormat;
+export default adaptCommentFormat;

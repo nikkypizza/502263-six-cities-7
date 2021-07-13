@@ -7,7 +7,7 @@ import Review from '../review/review.jsx';
 
 
 function ReviewsList({ reviews }) {
-  return <ul className="reviews__list">{reviews.map((it) => <Review key={it.id} reviewItem={it}/>)}</ul>;
+  return <ul className="reviews__list">{reviews.map((it) => <Review key={it.id} reviewItem={it} />)}</ul>;
 }
 
 ReviewsList.propTypes = {

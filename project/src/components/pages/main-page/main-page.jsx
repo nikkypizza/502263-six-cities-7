@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { arrayOf, bool, func, number, string } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { adPropTypes } from '../../../propTypes/ad.js';
 import { MapCitySetting, TABS_CITIES } from '../../../const';
-import { filterAdsByCity } from '../../../util.js';
 import { fetchOffers } from '../../../api/api-actions.js';
+import { getActiveCity, getAdsFilteredByCity, getFocusedAdId } from '../../../store/ui/selectors.js';
+import { getAdsAreLoaded } from '../../../store/data/selectors.js';
 
 import LoadWrapper from '../../load-wrapper/load-wrapper.jsx';
 import Header from '../../header/header';
@@ -16,10 +15,17 @@ import CityPlacesEmpty from '../../city-places-empty/city-places-empty.jsx';
 import Map from '../../map/map.jsx';
 
 
-function MainPage({ ads, activeCity, focusedAdId, adsAreLoaded, loadAds }) {
+function MainPage() {
+  const dispatch = useDispatch();
+
+  const ads = useSelector(getAdsFilteredByCity);
+  const activeCity = useSelector(getActiveCity);
+  const focusedAdId = useSelector(getFocusedAdId);
+  const adsAreLoaded = useSelector(getAdsAreLoaded);
+
   useEffect(() => {
-    loadAds();
-  }, [loadAds]);
+    dispatch(fetchOffers());
+  }, [dispatch]);
 
   return (
     <div className="page page--gray page--main">
@@ -28,7 +34,7 @@ function MainPage({ ads, activeCity, focusedAdId, adsAreLoaded, loadAds }) {
         <h1 className="visually-hidden">Cities</h1>
         <Tabs cities={TABS_CITIES} />
         <div className="cities">
-          <div className={cn('cities__places-container', 'container', {'cities__places-container--empty': !ads.length})}>
+          <div className={cn('cities__places-container', 'container', { 'cities__places-container--empty': !ads.length })}>
             <section className={ads.length ? 'cities__places places' : 'cities__no-places'}>
               <LoadWrapper isLoad={adsAreLoaded}>
                 {ads.length ?
@@ -48,26 +54,4 @@ function MainPage({ ads, activeCity, focusedAdId, adsAreLoaded, loadAds }) {
   );
 }
 
-MainPage.propTypes = {
-  ads: arrayOf(adPropTypes).isRequired,
-  activeCity: string,
-  focusedAdId: number,
-  adsAreLoaded: bool,
-  loadAds: func,
-};
-
-const mapStateToProps = ({ ads, activeCity, focusedAdId, adsAreLoaded }) => ({
-  ads: filterAdsByCity(ads, activeCity),
-  activeCity,
-  focusedAdId,
-  adsAreLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadAds() {
-    dispatch(fetchOffers());
-  },
-});
-
-export { MainPage };
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;
