@@ -41,6 +41,7 @@ const APIRoute = {
   ADS: '/hotels',
   ADS_NEARBY: '/nearby',
   COMMENTS: '/comments',
+  FAVOURITE: '/favorite',
   LOGIN: '/login',
   LOGOUT: '/logout',
   NOT_FOUND: '/404',

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { adsAreLoaded, fullAdInfoLoaded, loadAdComments, loadAdDetails, loadAds, loadAdsNearby, loadFullAdInfo } from '../action';
+import { adsAreLoaded, fullAdInfoLoaded, loadAdComments, loadAdDetails, loadAds, loadAdsNearby, loadFavouriteAds, loadFullAdInfo, setFavouriteAdsAreLoaded } from '../action';
 
 const initialState = {
   ads: [],
@@ -8,6 +8,8 @@ const initialState = {
   fullAdInfo: {},
   adComments: [],
   adsNearby: [],
+  favouriteAds: {},
+  favouriteAdsAreLoaded: false,
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -32,6 +34,12 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(loadAdsNearby, (state, action) => {
       state.adsNearby = action.payload;
+    })
+    .addCase(loadFavouriteAds, (state, action) => {
+      state.favouriteAds = action.payload;
+    })
+    .addCase(setFavouriteAdsAreLoaded, (state, action) => {
+      state.favouriteAdsAreLoaded = action.payload;
     });
 });
 

@@ -4,10 +4,11 @@ import { generatePath, Link } from 'react-router-dom';
 import { adPropTypes } from '../../propTypes/ad.js';
 import { AppRoute } from '../../const.js';
 import { convertRatingToStars } from '../../util.js';
+import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 
 
 function FavouritesCard({ data }) {
-  const { id, price, photos, rating, title, offerType } = data;
+  const { id, price, photos, rating, title, offerType, isFavourite } = data;
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -21,12 +22,7 @@ function FavouritesCard({ data }) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <BookmarkButton adId={id} isFavourite={isFavourite} />
         </div>
         <div className="place-card__rating rating" title={`Rating: ${rating}`}>
           <div className="place-card__stars rating__stars">

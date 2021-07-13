@@ -8,7 +8,7 @@ import { CardListNames, componentVariants } from './settings.js';
 import Card from '../card/card.jsx';
 
 
-function CardList({ ads, variant = CardListNames.MAIN_PAGE, onMouseEnter = () => {}, onMouseLeave = () => {} }) {
+function CardList({ ads, variant = CardListNames.MAIN_PAGE, onMouseEnter = () => { }, onMouseLeave = () => { } }) {
   const { listClassNameMod } = componentVariants[variant];
 
   return (

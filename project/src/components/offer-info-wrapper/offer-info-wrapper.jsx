@@ -1,13 +1,14 @@
 import React from 'react';
+import { arrayOf, bool, string } from 'prop-types';
 import cn from 'classnames';
 
-import { arrayOf, bool, string } from 'prop-types';
 import { convertRatingToStars, getPluralNoun } from '../../util.js';
 import { PremiumTagNames } from '../premium-tag/settings.js';
 import { adPropTypes } from '../../propTypes/ad.js';
 import { reviewPropTypes } from '../../propTypes/review.js';
 import { MAX_PHOTOS_IN_AD } from '../../const.js';
 import { CardListNames } from '../card-list/settings.js';
+import { BookmarkNames } from '../bookmark-button/settings.js';
 
 import PremiumTag from '../premium-tag/pemium-tag';
 import ImagesList from '../images-list/images-list';
@@ -17,10 +18,11 @@ import DescriptionList from '../descritption-list/description-list';
 import ReviewsList from '../reviews-list/reviews-list.jsx';
 import ReviewForm from '../review-form/review-form.jsx';
 import Map from '../map/map.jsx';
+import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 
 
 function OfferInfoWrapper({ info, reviews, adsNearby, adId, isAuth }) {
-  const { photos, title, address, isPremium, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions } = info;
+  const { photos, title, address, isPremium, isFavourite, rating, offerType, bedroomsAmount, capacity, price, features, host, descriptions } = info;
 
   const getMapAds = () => {
     const mapAds = adsNearby.slice();
@@ -39,12 +41,7 @@ function OfferInfoWrapper({ info, reviews, adsNearby, adId, isAuth }) {
               <h1 className="property__name">
                 {title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
-                <svg className="property__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <BookmarkButton adId={adId} isFavourite={isFavourite} variant={BookmarkNames.OFFER_PAGE} />
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">

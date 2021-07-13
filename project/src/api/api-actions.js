@@ -1,7 +1,8 @@
-import { loadAds, adsAreLoaded, login as userLogin, setAuthStatus as setAuth, logout as userLogout, loadFullAdInfo, fullAdInfoLoaded, redirectTo, loadAdsNearby, setCommentIsPosted, loadAdComments } from '../store/action';
+import { loadAds, adsAreLoaded, login as userLogin, setAuthStatus as setAuth, logout as userLogout, loadFullAdInfo, fullAdInfoLoaded, redirectTo, loadAdsNearby, setCommentIsPosted, setIsFavourite, loadAdComments, loadFavouriteAds, setFavouriteAdsAreLoaded } from '../store/action';
 import { APIRoute, AuthorizationStatus } from '../const';
 import adaptCommentFormat from '../adapters/comments';
 import adaptAdFormat from '../adapters/ads';
+import { getAdsByCityObj, getIsFavouriteStatusCode } from '../util';
 
 const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.ADS)
@@ -79,6 +80,27 @@ const postComment = (userComment, adId) => (dispatch, _getState, api) => {
     });
 };
 
+const fetchFavouriteAds = () => (dispatch, _getState, api) => {
+  api.get(`${APIRoute.FAVOURITE}`)
+    .then(({data}) => {
+      dispatch(loadFavouriteAds(
+        getAdsByCityObj(
+          data.map(adaptAdFormat),
+        ),
+      ));
+      dispatch(setFavouriteAdsAreLoaded(true));
+    });
+};
+
+const setIsFavouriteAd = (hotelId, isFavourite) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.FAVOURITE}/${hotelId}/${getIsFavouriteStatusCode(isFavourite)}`)
+    .then(() => {
+      dispatch(setIsFavourite(hotelId, getIsFavouriteStatusCode(isFavourite)));
+    }).catch((e) => {
+      dispatch(redirectTo(APIRoute.LOGIN));
+    });
+};
+
 export {
   fetchOffers,
   setAuthStatus,
@@ -87,5 +109,7 @@ export {
   fetchAdsNearby,
   fetchFullAdInfo,
   fetchAdComments,
-  postComment
+  postComment,
+  fetchFavouriteAds,
+  setIsFavouriteAd
 };
