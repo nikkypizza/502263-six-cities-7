@@ -9,11 +9,13 @@ import { componentVariants } from './settings.js';
 import { AppRoute } from '../../const.js';
 
 import PremiumTag from '../premium-tag/pemium-tag.jsx';
+import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 
 
 function Card({ data, variant, onMouseEnter, onMouseLeave }) {
-  const { id, isPremium, price, photos, rating, title, offerType } = data;
+  const { id, isPremium, price, photos, rating, title, offerType, isFavourite } = data;
   const { cardClassNameMod, imageWrapperClassNameMod } = componentVariants[variant];
+
   return (
     <article className={cn(cardClassNameMod, 'place-card')}
       onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
@@ -30,12 +32,7 @@ function Card({ data, variant, onMouseEnter, onMouseLeave }) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <BookmarkButton isFavourite={isFavourite} adId={id} />
         </div>
         <div className="place-card__rating rating" title={`Rating: ${rating}`}>
           <div className="place-card__stars rating__stars">
@@ -61,4 +58,4 @@ Card.propTypes = {
   variant: string,
 };
 
-export default memo(Card, (prevProps ,nextProps) => prevProps.data === nextProps.data);
+export default memo(Card, (prevProps, nextProps) => prevProps.data === nextProps.data);

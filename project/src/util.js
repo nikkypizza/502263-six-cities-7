@@ -35,6 +35,8 @@ const sortByKey = (arr, adSortingType) => {
 
 const sortByDate = (arr) => arr.slice().sort((a,b) => new Date(b.date) - new Date(a.date));
 
+const getIsFavouriteStatusCode = (bool) => bool ? 1 : 0;
+
 const getAdsByCityObj = (ads) => ads.reduce((acc, it) => {
   if (!acc[it.city]) { acc[it.city] = []; }
   acc[it.city].push(it);
@@ -49,5 +51,6 @@ export {
   filterAdsByCity,
   sortByKey,
   getAdsByCityObj,
-  sortByDate
+  sortByDate,
+  getIsFavouriteStatusCode
 };
