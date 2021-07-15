@@ -45,7 +45,7 @@ const login = createAction(ActionType.LOGIN, (userData) => ({payload: userData})
 const logout = createAction(ActionType.LOGOUT, (userData) => ({payload: userData}));
 const setAuthStatus = createAction(ActionType.SET_AUTH_STATUS, (bool) => ({payload: bool}));
 const setCommentIsPosted = createAction(ActionType.SET_COMMENT_IS_POSTED, (bool) => ({payload: bool}));
-const setIsFavourite = createAction(ActionType.SET_IS_FAVOURITE, (bool) => ({payload: bool}));
+const setIsFavourite = createAction(ActionType.SET_IS_FAVOURITE, (hotelId, isFavourite) => ({payload: {hotelId, isFavourite}}));
 
 const redirectTo = createAction(ActionType.REDIRECT_TO, (path) => ({payload: path}));
 

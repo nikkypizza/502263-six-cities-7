@@ -35,6 +35,19 @@ const sortByKey = (arr, adSortingType) => {
 
 const sortByDate = (arr) => arr.slice().sort((a,b) => new Date(b.date) - new Date(a.date));
 
+const mapIsFavouriteToState = (fullAdInfo, ads, adsNearby, favouriteAds, payload) => {
+  const matchId = (item) => item.id === payload.hotelId;
+
+  const favouriteFromPageIndex = favouriteAds.findIndex(matchId);
+  const favouriteNearby = adsNearby.find(matchId);
+  const favFromTotal = ads.find(matchId);
+
+  if (favouriteFromPageIndex > -1) {favouriteAds.splice(favouriteFromPageIndex, 1);}
+  if (favouriteNearby) {favouriteNearby.isFavourite = payload.isFavourite;}
+  if (favFromTotal) {favFromTotal.isFavourite = payload.isFavourite;}
+  if (fullAdInfo.id === payload.hotelId) {fullAdInfo.isFavourite = payload.isFavourite;}
+};
+
 const getIsFavouriteStatusCode = (bool) => bool ? 1 : 0;
 
 const getAdsByCityObj = (ads) => ads.reduce((acc, it) => {
@@ -52,5 +65,6 @@ export {
   sortByKey,
   getAdsByCityObj,
   sortByDate,
-  getIsFavouriteStatusCode
+  getIsFavouriteStatusCode,
+  mapIsFavouriteToState
 };

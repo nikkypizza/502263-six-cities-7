@@ -22,7 +22,7 @@ function FavouritesCard({ data }) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton adId={id} isFavourite={isFavourite} />
+          <BookmarkButton adId={+id} isFavourite={isFavourite} />
         </div>
         <div className="place-card__rating rating" title={`Rating: ${rating}`}>
           <div className="place-card__stars rating__stars">
