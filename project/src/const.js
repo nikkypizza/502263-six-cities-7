@@ -4,6 +4,7 @@ const DEFAULT_CITY = TABS_CITIES[0];
 const MAX_PHOTOS_IN_AD = 6;
 const MAX_ADS_NEARBY = 3;
 const MAX_REVIEWS_IN_AD = 10;
+const NOTIFICATION_HIDE_TIMEOUT = 3000;
 
 const CommentFormLength = {
   MIN: 50,
@@ -35,6 +36,8 @@ const AppRoute = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id?',
+  SERVER_ERROR: '/serverDown',
+  NOT_FOUND: '/404',
 };
 
 const APIRoute = {
@@ -44,7 +47,6 @@ const APIRoute = {
   FAVOURITE: '/favorite',
   LOGIN: '/login',
   LOGOUT: '/logout',
-  NOT_FOUND: '/404',
 };
 
 const MapPinSetting = {
@@ -99,7 +101,19 @@ const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN',
 };
 
+const CommentSendStatus = {
+  DEFAULT: null,
+  OK: 'ok',
+  PENDING: 'pending',
+};
+
+const HttpCode = {
+  UNAUTHORIZED: 401,
+  SERVER_ERRORS: [500, 501, 502, 503, 504, 505],
+};
+
 export {
+  NOTIFICATION_HIDE_TIMEOUT,
   DEFAULT_SORTING_TYPE,
   DISABLED_CLASSNAME,
   MAX_PHOTOS_IN_AD,
@@ -108,8 +122,10 @@ export {
   SORTING_OPTIONS,
   TABS_CITIES,
   DEFAULT_CITY,
+  HttpCode,
   CommentFormLength,
   AuthorizationStatus,
+  CommentSendStatus,
   MapPinSetting,
   MapCitySetting,
   AppRoute,

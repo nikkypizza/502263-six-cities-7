@@ -2,6 +2,6 @@ import { NameSpace } from '../root-reducer';
 
 const getAuthorizationStatus = (state) => state[NameSpace.USER].authorizationStatus;
 const getAuthInfo = (state) => state[NameSpace.USER].userInfo;
-const getCommentIsPosted = (state) => state[NameSpace.USER].commentIsPosted;
+const getCommentSendStatus = (state) => state[NameSpace.USER].commentSendStatus;
 
-export { getAuthorizationStatus, getAuthInfo, getCommentIsPosted };
+export { getAuthorizationStatus, getAuthInfo, getCommentSendStatus };

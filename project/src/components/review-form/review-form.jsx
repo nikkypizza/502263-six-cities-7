@@ -3,41 +3,47 @@ import { useDispatch, useSelector } from 'react-redux';
 import { string } from 'prop-types';
 import cn from 'classnames';
 
-import { CommentFormLength, DISABLED_CLASSNAME } from '../../const.js';
+import { CommentFormLength, CommentSendStatus, DISABLED_CLASSNAME } from '../../const.js';
 import { postComment } from '../../api/api-actions.js';
-import { setCommentIsPosted } from '../../store/action.js';
-import { getCommentIsPosted } from '../../store/user/selectors.js';
+import { setCommentSendStatus } from '../../store/action.js';
+import { getCommentSendStatus } from '../../store/user/selectors.js';
 
 import InputStarList from '../input-star-list/input-star-list.jsx';
+import { getIsCommentPostError } from '../../store/ui/selectors.js';
 
 
 function ReviewForm({ adId }) {
   const dispatch = useDispatch();
-  const commentIsPosted = useSelector(getCommentIsPosted);
+  const commentStatus = useSelector(getCommentSendStatus);
+  const isPostError = useSelector(getIsCommentPostError);
+
+  const commentSent = commentStatus === CommentSendStatus.OK;
+  const isFormEnabled = commentStatus === CommentSendStatus.DEFAULT;
 
   const [initialState] = useState({ rating: null, comment: '' });
-  const [formData, setFormData] = React.useState(initialState);
+  const [formData, setFormData] = useState(initialState);
 
   const formNode = useRef('');
 
 
   useEffect(() => {
-    if (commentIsPosted) {
+    if (!isPostError && commentSent) {
       formNode.current.reset();
       setFormData(initialState);
+      dispatch(setCommentSendStatus(CommentSendStatus.DEFAULT));
     }
-  }, [commentIsPosted, initialState]);
+  }, [dispatch, isPostError, initialState, commentSent]);
 
   const onSubmit = (evt) => {
     evt.preventDefault();
+    dispatch(setCommentSendStatus(CommentSendStatus.PENDING));
     dispatch(postComment(formData, adId));
-    dispatch(setCommentIsPosted(false));
   };
 
-  const getIsButtonDisabled = () => !(formData.rating && formData.comment.length >= CommentFormLength.MIN) || !commentIsPosted;
+  const getIsButtonDisabled = () => !(formData.rating && formData.comment.length >= CommentFormLength.MIN) || !isFormEnabled;
 
   return (
-    <form className={cn('reviews__form', 'form', !commentIsPosted && DISABLED_CLASSNAME)} action="#" method="post" onSubmit={onSubmit} ref={formNode}>
+    <form className={cn('reviews__form', 'form', { [DISABLED_CLASSNAME]: !isFormEnabled })} action="#" method="post" onSubmit={onSubmit} ref={formNode}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
