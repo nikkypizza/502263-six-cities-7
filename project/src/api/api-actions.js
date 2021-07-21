@@ -75,42 +75,42 @@ const fetchAdComments = (adId) => (dispatch, _getState, api) => (
     })
 );
 
-const fetchAdsNearby = (adId) => (dispatch, _getState, api) => {
+const fetchAdsNearby = (adId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.ADS}/${adId}${APIRoute.ADS_NEARBY}`)
     .then(({data}) => {
       dispatch(loadAdsNearby(data.map(adaptAdFormat)));
-    });
-};
+    })
+);
 
-const postComment = (userComment, adId) => (dispatch, _getState, api) => {
+const postComment = (userComment, adId) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}/${adId}`, userComment)
     .then(({data}) => {
-      dispatch(setCommentSendStatus(CommentSendStatus.OK));
       dispatch(addComment(data.map(adaptCommentFormat)));
+      dispatch(setCommentSendStatus(CommentSendStatus.OK));
     })
     .catch((e) => {
+      dispatch(setError(e.message));
       dispatch(setIsCommentPostError(true));
       dispatch(setCommentSendStatus(CommentSendStatus.DEFAULT));
-      dispatch(setError(e.message));
-    });
-};
+    })
+);
 
-const fetchFavouriteAds = () => (dispatch, _getState, api) => {
-  api.get(`${APIRoute.FAVOURITE}`)
+const fetchFavouriteAds = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVOURITE)
     .then(({data}) => {
       dispatch(loadFavouriteAds(data.map(adaptAdFormat)));
       dispatch(setFavouriteAdsAreLoaded(true));
-    });
-};
+    })
+);
 
-const setIsFavouriteAd = (hotelId, isFavourite) => (dispatch, _getState, api) => {
+const setIsFavouriteAd = (hotelId, isFavourite) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVOURITE}/${hotelId}/${getIsFavouriteStatusCode(isFavourite)}`)
     .then(() => {
       dispatch(setIsFavourite(hotelId, isFavourite));
     }).catch((e) => {
       dispatch(redirectTo(AppRoute.LOGIN));
-    });
-};
+    })
+);
 
 export {
   fetchOffers,
