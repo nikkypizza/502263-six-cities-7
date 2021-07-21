@@ -20,8 +20,8 @@ const user = createReducer(initialState, (builder) => {
     .addCase(setCommentSendStatus, (state, action) => {
       state.commentSendStatus = action.payload;
     })
-    .addCase(logout, (state, action) => {
-      state.userInfo = action.payload;
+    .addCase(logout, (state) => {
+      state.userInfo = {};
     });
 });
 

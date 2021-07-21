@@ -5,7 +5,7 @@ import { string } from 'prop-types';
 import { AuthorizationStatus, CommentSendStatus } from '../../../const.js';
 import { getFullAdInfo, getFullAdInfoLoaded, getLimitedAdsNearby, getLimitedSortedComments } from '../../../store/data/selectors.js';
 import { fetchAdsNearby, fetchFullAdInfo, fetchAdComments } from '../../../api/api-actions.js';
-import { fullAdInfoLoaded as setFullAdInfoLoaded, setCommentPostError, setCommentSendStatus, setError } from '../../../store/action.js';
+import { fullAdInfoLoaded as setFullAdInfoLoaded, setIsCommentPostError, setCommentSendStatus, setError } from '../../../store/action.js';
 import { getAuthorizationStatus } from '../../../store/user/selectors.js';
 import { getError, getIsCommentPostError } from '../../../store/ui/selectors.js';
 
@@ -26,9 +26,9 @@ function OfferPage({ adId }) {
   const isPostError = useSelector(getIsCommentPostError);
   const errMessage = useSelector(getError);
 
-  const onNotificationHide = () => {
+  const onTransitionEnd = () => {
     dispatch(setError(''));
-    dispatch(setCommentPostError(false));
+    dispatch(setIsCommentPostError(false));
     dispatch(setCommentSendStatus(CommentSendStatus.DEFAULT));
   };
 
@@ -42,7 +42,7 @@ function OfferPage({ adId }) {
 
   return (
     <div className="page">
-      {isPostError && <Notification message={errMessage} onNotificationHide={onNotificationHide}/>}
+      {isPostError && <Notification message={errMessage} onTransitionEnd={onTransitionEnd}/>}
 
       <Header isSignedIn />
       <main className="page__main page__main--property">

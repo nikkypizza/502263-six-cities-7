@@ -1,4 +1,4 @@
-import { loadAds, adsAreLoaded, login as userLogin, setAuthStatus as setAuth, logout as userLogout, loadFullAdInfo, fullAdInfoLoaded, redirectTo, loadAdsNearby, setCommentSendStatus, setIsFavourite, loadAdComments, addComment, loadFavouriteAds, setFavouriteAdsAreLoaded, setError, setCommentPostError } from '../store/action';
+import { loadAds, adsAreLoaded, login as userLogin, setAuthStatus as setAuth, logout as userLogout, loadFullAdInfo, fullAdInfoLoaded, redirectTo, loadAdsNearby, setCommentSendStatus, setIsFavourite, loadAdComments, addComment, loadFavouriteAds, setFavouriteAdsAreLoaded, setError, setIsCommentPostError } from '../store/action';
 import { APIRoute, AppRoute, AuthorizationStatus, CommentSendStatus, HttpCode } from '../const';
 import adaptCommentFormat from '../adapters/comments';
 import adaptAdFormat from '../adapters/ads';
@@ -89,7 +89,7 @@ const postComment = (userComment, adId) => (dispatch, _getState, api) => {
       dispatch(addComment(data.map(adaptCommentFormat)));
     })
     .catch((e) => {
-      dispatch(setCommentPostError(true));
+      dispatch(setIsCommentPostError(true));
       dispatch(setCommentSendStatus(CommentSendStatus.DEFAULT));
       dispatch(setError(e.message));
     });

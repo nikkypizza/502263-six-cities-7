@@ -5,16 +5,16 @@ import cn from 'classnames';
 import { NOTIFICATION_HIDE_TIMEOUT } from '../../const';
 
 
-function Notification({message, onNotificationHide}) {
+function Notification({message, onTransitionEnd}) {
   const [isHiding, setIsHiding] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setIsHiding(true), NOTIFICATION_HIDE_TIMEOUT);
-    return () => onNotificationHide();
+    return () => onTransitionEnd();
   }, []);
 
   return (
-    <h3 className={cn('notification', { 'notification--hiding': isHiding })} onTransitionEnd={onNotificationHide}>
+    <h3 className={cn('notification', { 'notification--hiding': isHiding })} onTransitionEnd={onTransitionEnd}>
       {message}
     </h3>
   );
@@ -22,7 +22,7 @@ function Notification({message, onNotificationHide}) {
 
 Notification.propTypes = {
   message: string.isRequired,
-  onNotificationHide: func.isRequired,
+  onTransitionEnd: func.isRequired,
 };
 
 export default Notification;
