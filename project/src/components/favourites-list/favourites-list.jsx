@@ -19,7 +19,7 @@ function FavoritesList({ ads }) {
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
         {Object.entries(adsObj).map(([key, value]) => (
-          <li key={key} className="favorites__locations-items">
+          <li key={key} className="favorites__locations-items" data-testid='favourites-city-section'>
 
             <div className="favorites__locations locations locations--current">
               <div className="locations__item">

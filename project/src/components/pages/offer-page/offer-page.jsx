@@ -55,7 +55,7 @@ function OfferPage({ adId }) {
 }
 
 OfferPage.propTypes = {
-  adId: string,
+  adId: string.isRequired,
 };
 
 export default OfferPage;

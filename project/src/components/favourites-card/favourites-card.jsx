@@ -10,7 +10,7 @@ import BookmarkButton from '../bookmark-button/bookmark-button.jsx';
 function FavouritesCard({ data }) {
   const { id, price, photos, rating, title, offerType, isFavourite } = data;
   return (
-    <article className="favorites__card place-card">
+    <article className="favorites__card place-card" data-testid='favourites-card'>
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={{ pathname: generatePath(AppRoute.OFFER, { id }) }}>
           <img className="place-card__image" src={photos.main} width="150" height="110" alt="Property view" />

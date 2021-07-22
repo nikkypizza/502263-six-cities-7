@@ -15,9 +15,7 @@ function Tabs({ cities }) {
   return (
     <div className="tabs">
       <section className="locations container">
-        <ul className="locations__list tabs__list">
-          <TabsList cities={cities} activeCity={activeCity} onClick={(city) => dispatch(changeCity(city))} />
-        </ul>
+        <TabsList cities={cities} activeCity={activeCity} onClick={(city) => dispatch(changeCity(city))} />
       </section>
     </div>
   );
