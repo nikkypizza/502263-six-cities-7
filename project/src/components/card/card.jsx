@@ -19,6 +19,7 @@ function Card({ data, variant, onMouseEnter, onMouseLeave }) {
   return (
     <article className={cn(cardClassNameMod, 'place-card')}
       onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
+      data-testid='list-card'
     >
       {isPremium && <PremiumTag />}
       <div className={cn(imageWrapperClassNameMod, 'place-card__image-wrapper')}>
@@ -32,7 +33,7 @@ function Card({ data, variant, onMouseEnter, onMouseLeave }) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <BookmarkButton isFavourite={isFavourite} adId={id} />
+          <BookmarkButton isFavourite={isFavourite} adId={+id} />
         </div>
         <div className="place-card__rating rating" title={`Rating: ${rating}`}>
           <div className="place-card__stars rating__stars">

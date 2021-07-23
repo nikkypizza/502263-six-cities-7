@@ -1,8 +1,8 @@
-import { loadAds, adsAreLoaded, login as userLogin, setAuthStatus as setAuth, logout as userLogout, loadFullAdInfo, fullAdInfoLoaded, redirectTo, loadAdsNearby, setCommentIsPosted, setIsFavourite, loadAdComments, loadFavouriteAds, setFavouriteAdsAreLoaded } from '../store/action';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { loadAds, adsAreLoaded, login as userLogin, setAuthStatus as setAuth, logout as userLogout, loadFullAdInfo, fullAdInfoLoaded, redirectTo, loadAdsNearby, setCommentSendStatus, setIsFavourite, loadAdComments, addComment, loadFavouriteAds, setFavouriteAdsAreLoaded, setError, setIsCommentPostError } from '../store/action';
+import { APIRoute, AppRoute, AuthorizationStatus, CommentSendStatus, HttpCode } from '../const';
 import adaptCommentFormat from '../adapters/comments';
 import adaptAdFormat from '../adapters/ads';
-import { getAdsByCityObj, getIsFavouriteStatusCode } from '../util';
+import { getIsFavouriteStatusCode } from '../util';
 
 const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.ADS)
@@ -20,7 +20,20 @@ const setAuthStatus = () => (dispatch, _getState, api) => (
       dispatch(userLogin(data));
       dispatch(setAuth(AuthorizationStatus.AUTH));
     }).catch((e) => {
-      dispatch(setAuth(AuthorizationStatus.NO_AUTH));
+      const status = e.response.status;
+
+      switch (true) {
+        case status === HttpCode.UNAUTHORIZED:
+          dispatch(setAuth(AuthorizationStatus.NO_AUTH));
+          break;
+
+        case HttpCode.SERVER_ERRORS.includes(status):
+          dispatch(redirectTo(AppRoute.SERVER_ERROR));
+          break;
+
+        default:
+          dispatch(setAuth(AuthorizationStatus.NO_AUTH));
+      }
     })
 );
 
@@ -50,7 +63,7 @@ const fetchFullAdInfo = (adId) => (dispatch, _getState, api) => (
       dispatch(loadFullAdInfo(adaptAdFormat(data)));
       dispatch(fullAdInfoLoaded(true));
     }).catch((e) => {
-      dispatch(redirectTo(APIRoute.NOT_FOUND));
+      dispatch(redirectTo(AppRoute.NOT_FOUND));
       dispatch(fullAdInfoLoaded(false));
     })
 );
@@ -62,44 +75,42 @@ const fetchAdComments = (adId) => (dispatch, _getState, api) => (
     })
 );
 
-const fetchAdsNearby = (adId) => (dispatch, _getState, api) => {
+const fetchAdsNearby = (adId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.ADS}/${adId}${APIRoute.ADS_NEARBY}`)
     .then(({data}) => {
       dispatch(loadAdsNearby(data.map(adaptAdFormat)));
-    });
-};
+    })
+);
 
-const postComment = (userComment, adId) => (dispatch, _getState, api) => {
+const postComment = (userComment, adId) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}/${adId}`, userComment)
     .then(({data}) => {
-      dispatch(setCommentIsPosted(true));
-      dispatch(loadAdComments(data.map(adaptCommentFormat)));
+      dispatch(addComment(data.map(adaptCommentFormat)));
+      dispatch(setCommentSendStatus(CommentSendStatus.OK));
     })
     .catch((e) => {
-      dispatch(setCommentIsPosted(true));
-    });
-};
+      dispatch(setError(e.message));
+      dispatch(setIsCommentPostError(true));
+      dispatch(setCommentSendStatus(CommentSendStatus.DEFAULT));
+    })
+);
 
-const fetchFavouriteAds = () => (dispatch, _getState, api) => {
-  api.get(`${APIRoute.FAVOURITE}`)
+const fetchFavouriteAds = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVOURITE)
     .then(({data}) => {
-      dispatch(loadFavouriteAds(
-        getAdsByCityObj(
-          data.map(adaptAdFormat),
-        ),
-      ));
+      dispatch(loadFavouriteAds(data.map(adaptAdFormat)));
       dispatch(setFavouriteAdsAreLoaded(true));
-    });
-};
+    })
+);
 
-const setIsFavouriteAd = (hotelId, isFavourite) => (dispatch, _getState, api) => {
+const setIsFavouriteAd = (hotelId, isFavourite) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVOURITE}/${hotelId}/${getIsFavouriteStatusCode(isFavourite)}`)
     .then(() => {
-      dispatch(setIsFavourite(hotelId, getIsFavouriteStatusCode(isFavourite)));
+      dispatch(setIsFavourite(hotelId, isFavourite));
     }).catch((e) => {
-      dispatch(redirectTo(APIRoute.LOGIN));
-    });
-};
+      dispatch(redirectTo(AppRoute.LOGIN));
+    })
+);
 
 export {
   fetchOffers,

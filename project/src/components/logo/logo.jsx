@@ -14,6 +14,7 @@ function Logo({ variant = LogoNames.HEADER, isDisabled = false }) {
       className={cn(linkClassName, isDisabled && DISABLED_CLASSNAME)}
       tabIndex={isDisabled ? '-1' : undefined}
       to={AppRoute.ROOT}
+      data-testid='footer-link'
     >
       <img
         className={imgClassName}

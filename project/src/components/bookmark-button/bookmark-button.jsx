@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { bool, number, string } from 'prop-types';
@@ -8,18 +8,15 @@ import { setIsFavouriteAd } from '../../api/api-actions.js';
 
 
 function BookmarkButton({ isFavourite, adId, variant = BookmarkNames.LISTING }) {
-  const [isFavouriteState, setIsFavouriteState] = useState(isFavourite);
-
   const { buttonClassname, buttonActiveModClassname, svgClassname, svgWidth, svgHeight } = componentVariants[variant];
   const dispatch = useDispatch();
 
-  const handleFavouriteClick = () => {
-    dispatch(setIsFavouriteAd(adId, !isFavouriteState));
-    setIsFavouriteState(!isFavouriteState);
+  const handleClick = () => {
+    dispatch(setIsFavouriteAd(adId, !isFavourite));
   };
 
   return (
-    <button className={cn('button', buttonClassname, { [`${buttonClassname}${buttonActiveModClassname}`]: isFavouriteState })} type="button" onClick={handleFavouriteClick} title={`${isFavouriteState ? 'Remove from' : 'Add to'} favourites`}>
+    <button className={cn('button', buttonClassname, { [`${buttonClassname}${buttonActiveModClassname}`]: isFavourite })} type="button" onClick={handleClick} title={`${isFavourite ? 'Remove from' : 'Add to'} favourites`}>
       <svg className={svgClassname} width={svgWidth} height={svgHeight}>
         <use xlinkHref="#icon-bookmark"></use>
       </svg>

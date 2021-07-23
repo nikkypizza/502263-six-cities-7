@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { login, setAuthStatus, setCommentIsPosted, logout } from '../action';
-import { AuthorizationStatus} from '../../const';
+import { login, setAuthStatus, setCommentSendStatus, logout } from '../action';
+import { AuthorizationStatus, CommentSendStatus} from '../../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  commentSendStatus: CommentSendStatus.DEFAULT,
   userInfo: {},
-  commentIsPosted: true,
 };
 
 const user = createReducer(initialState, (builder) => {
@@ -17,11 +17,11 @@ const user = createReducer(initialState, (builder) => {
     .addCase(setAuthStatus, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(setCommentIsPosted, (state, action) => {
-      state.commentIsPosted = action.payload;
+    .addCase(setCommentSendStatus, (state, action) => {
+      state.commentSendStatus = action.payload;
     })
-    .addCase(logout, (state, action) => {
-      state.userInfo = action.payload;
+    .addCase(logout, (state) => {
+      state.userInfo = {};
     });
 });
 

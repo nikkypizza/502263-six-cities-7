@@ -15,9 +15,8 @@ import LoadWrapper from '../../load-wrapper/load-wrapper.jsx';
 
 function FavoritesPage() {
   const dispatch = useDispatch();
-  const adsObj = useSelector(getFavouriteAds);
+  const ads = useSelector(getFavouriteAds);
   const adsAreLoaded = useSelector(favouriteAdsAreLoaded);
-  const isEmpty = adsAreLoaded && !Object.keys(adsObj).length;
 
   useEffect(() => {
     dispatch(fetchFavouriteAds());
@@ -30,9 +29,9 @@ function FavoritesPage() {
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className={cn('favorites', { 'favorites--empty': isEmpty })}>
+          <section className={cn('favorites', { 'favorites--empty': !ads.length })}>
             <LoadWrapper isLoad={adsAreLoaded}>
-              {isEmpty ? <FavouritesListEmpty /> : <FavoritesList adsObj={adsObj} />}
+              {!ads.length ? <FavouritesListEmpty /> : <FavoritesList ads={ads} />}
             </LoadWrapper>
           </section>
         </div>

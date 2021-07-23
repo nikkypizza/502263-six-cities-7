@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { adsAreLoaded, fullAdInfoLoaded, loadAdComments, loadAdDetails, loadAds, loadAdsNearby, loadFavouriteAds, loadFullAdInfo, setFavouriteAdsAreLoaded } from '../action';
+import { addComment, adsAreLoaded, fullAdInfoLoaded, loadAdComments, loadAds, loadAdsNearby, loadFavouriteAds, loadFullAdInfo, setFavouriteAdsAreLoaded, setIsFavourite } from '../action';
+import { mapIsFavouriteToState } from '../../util';
 
 const initialState = {
   ads: [],
@@ -8,7 +9,7 @@ const initialState = {
   fullAdInfo: {},
   adComments: [],
   adsNearby: [],
-  favouriteAds: {},
+  favouriteAds: [],
   favouriteAdsAreLoaded: false,
 };
 
@@ -20,9 +21,6 @@ const data = createReducer(initialState, (builder) => {
     .addCase(adsAreLoaded, (state, action) => {
       state.adsAreLoaded = action.payload;
     })
-    .addCase(loadAdDetails, (state, action) => {
-      state.currentAdDetails = action.payload;
-    })
     .addCase(fullAdInfoLoaded, (state, action) => {
       state.fullAdInfoLoaded = action.payload;
     })
@@ -30,6 +28,9 @@ const data = createReducer(initialState, (builder) => {
       state.fullAdInfo = action.payload;
     })
     .addCase(loadAdComments, (state, action) => {
+      state.adComments = action.payload;
+    })
+    .addCase(addComment, (state, action) => {
       state.adComments = action.payload;
     })
     .addCase(loadAdsNearby, (state, action) => {
@@ -40,6 +41,9 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(setFavouriteAdsAreLoaded, (state, action) => {
       state.favouriteAdsAreLoaded = action.payload;
+    })
+    .addCase(setIsFavourite, ({ fullAdInfo, ads, adsNearby, favouriteAds }, { payload }) => {
+      mapIsFavouriteToState(fullAdInfo, ads, adsNearby, favouriteAds, payload);
     });
 });
 

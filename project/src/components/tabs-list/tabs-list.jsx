@@ -7,7 +7,7 @@ function TabsList({ cities, activeCity, onClick }) {
   return (
     <ul className="locations__list tabs__list">
       {cities.map((it) => (
-        <li className="locations__item" key={it}>
+        <li className="locations__item" key={it} data-testid="tabs-item">
           <button onClick={() => onClick(it)} className={cn('locations__item-link', 'tabs__item', { 'tabs__item--active': it === activeCity })}>
             <span>{it}</span>
           </button>

@@ -41,11 +41,11 @@ function OfferInfoWrapper({ info, reviews, adsNearby, adId, isAuth }) {
               <h1 className="property__name">
                 {title}
               </h1>
-              <BookmarkButton adId={adId} isFavourite={isFavourite} variant={BookmarkNames.OFFER_PAGE} />
+              <BookmarkButton adId={+adId} isFavourite={isFavourite} variant={BookmarkNames.OFFER_PAGE} />
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{ width: convertRatingToStars(rating) }}></span>
+                <span style={{ width: convertRatingToStars(rating, false) }}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="property__rating-value rating__value">{rating}</span>

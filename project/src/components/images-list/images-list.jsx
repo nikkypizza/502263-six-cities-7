@@ -8,7 +8,7 @@ function ImagesList({ images }) {
       <div className="property__gallery">
         {images.map((it) => (
           <div key={it} className="property__image-wrapper">
-            <img className="property__image" src={it} alt="Property view" />
+            <img className="property__image" src={it} alt="Property view" data-testid='offer-image'/>
           </div>
         ))}
       </div>
