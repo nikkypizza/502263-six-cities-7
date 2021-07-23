@@ -4,9 +4,10 @@ import { render } from '@testing-library/react';
 import DescriptionList from './description-list';
 
 
+const DESCRIPTIONS = ['tub', 'bed'];
+
 describe('Component: DescriptionList', () => {
   it('should render correctly', () => {
-    const DESCRIPTIONS = ['tub', 'bed'];
     const { getByText } = render(<DescriptionList descriptions={DESCRIPTIONS}/>);
 
     const contentElement = getByText('tub');

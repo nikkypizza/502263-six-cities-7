@@ -48,7 +48,7 @@ function ReviewForm({ adId }) {
         Your review
       </label>
       <InputStarList onInput={(e) => setFormData({ ...formData, rating: e.target.value || null })} />
-      <textarea onInput={(e) => setFormData({ ...formData, comment: e.target.value || '' })} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" minLength={CommentFormLength.MIN} maxLength={CommentFormLength.MAX} required></textarea>
+      <textarea onInput={(e) => setFormData({ ...formData, comment: e.target.value || '' })} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" minLength={CommentFormLength.MIN} maxLength={CommentFormLength.MAX} required data-testid='review-form-textarea'></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set
@@ -57,7 +57,7 @@ function ReviewForm({ adId }) {
           </span>
           and describe your stay with at least <b className="reviews__text-amount">{CommentFormLength.MIN} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={getIsButtonDisabled()}>
+        <button className="reviews__submit form__submit button" type="submit" disabled={getIsButtonDisabled()} data-testid='review-submit-btn'>
           Submit
         </button>
       </div>

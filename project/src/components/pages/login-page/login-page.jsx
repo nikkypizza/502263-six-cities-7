@@ -35,13 +35,13 @@ function LoginPage() {
             <form className="login__form form" ref={formNode} onSubmit={onSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)+([a-z]{2,18})$" required />
+                <input className="login__input form__input" type="email" name="email" placeholder="Email" pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)+([a-z]{2,18})$" required data-testid='login-email-input'/>
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" onInput={onPasswordInput} type="password" name="password" placeholder="Password" required />
+                <input className="login__input form__input" onInput={onPasswordInput} type="password" name="password" placeholder="Password" required data-testid='login-password-input'/>
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit" data-testid='login-submit-button'>Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

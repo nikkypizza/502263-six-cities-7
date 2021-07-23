@@ -5,12 +5,10 @@ import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import * as Redux from 'react-redux';
-import userEvent from '@testing-library/user-event';
 
-import CityPlaces from './city-places';
-import { getPluralNoun } from '../../util';
-import { ActionType } from '../../store/action';
+import { AuthorizationStatus } from '../../../const';
 
+import FavouritesPage from './favorites-page';
 
 const ADS = [{
   id: 1,
@@ -29,7 +27,7 @@ const ADS = [{
   bedroomsAmount: 1,
   capacity: 9,
   features: ['Towels'],
-  address: {lat: 52.369553943508,lng: 4.85309666406198},
+  address: {lat: 52.369553943508,lng: 4.85309666406198,zoom: 12},
   host: {name: 'Oleg',userPic: 'https://www.placecage.com/75/75',isPro: true},
 },
 {
@@ -49,54 +47,58 @@ const ADS = [{
   bedroomsAmount: 6,
   capacity: 13,
   features: ['Washing machine', 'Towels', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge', 'Wi-Fi'],
-  address: {lat: 52.3909553943508,lng: 4.929309666406198},
+  address: {lat: 52.3909553943508,lng: 4.929309666406198,zoom: 12},
   host: {name: 'Paul',userPic: 'https://www.placecage.com/75/75',isPro: true},
 },
 ];
 
+
 const mockStore = configureStore();
 
-describe('Component: CityPlaces', () => {
+describe('Component: FavouritesPage', () => {
   it('should render correctly', () => {
-    const store = mockStore({UI: {adSortingType: null}});
-    const history = createMemoryHistory();
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      DATA:  {favouriteAds: ADS, favouriteAdsAreLoaded: true},
+    });
 
-    render (
-      <Provider store={store}>
-        <Router history={history}>
-          <CityPlaces ads={ADS} activeCity={ADS[0].city}/>
-        </Router>
-      </Provider>,
-    );
-
-    expect(screen.getByText(`${ADS.length} ${getPluralNoun(ADS.length, 'place')} to stay in ${ADS[0].city}`)).toBeInTheDocument();
-    expect(screen.getAllByTestId('list-card')).toHaveLength(ADS.length);
-  });
-
-  it('should use dispatch on mouseEnter and mouseLeave', () => {
-    const store = mockStore({UI: {adSortingType: null}});
-    const history = createMemoryHistory();
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);
+    const history = createMemoryHistory();
 
     render (
       <Provider store={store}>
         <Router history={history}>
-          <CityPlaces ads={ADS} activeCity={ADS[0].city}/>
+          <FavouritesPage/>
         </Router>
       </Provider>,
     );
 
-    userEvent.hover(screen.getAllByTestId('list-card')[0]);
-
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).nthCalledWith(1, {type: ActionType.CHANGE_FOCUSED_AD_ID,payload: ADS[0].id});
-
-
-    userEvent.unhover(screen.getAllByTestId('list-card')[0]);
-
     expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).nthCalledWith(2, {type: ActionType.CHANGE_FOCUSED_AD_ID,payload: null});
+    expect(screen.getAllByTestId('city-link')).toHaveLength(2);
+  });
+
+  it('should render FavouritesListEmpty when no ads', () => {
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      DATA:  {favouriteAds: [], favouriteAdsAreLoaded: true},
+    });
+
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+    const history = createMemoryHistory();
+
+    render (
+      <Provider store={store}>
+        <Router history={history}>
+          <FavouritesPage/>
+        </Router>
+      </Provider>,
+    );
+
+    const contentElement = screen.getByText('Nothing yet saved.');
+    expect(contentElement).toBeInTheDocument();
   });
 });

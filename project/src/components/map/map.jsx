@@ -35,7 +35,7 @@ function Map({ city, ads, focusedAdId }) {
     }
   }, [map, city, focusedAdId, activeIcon, ads, defaultIcon]);
 
-  return <div id="map" style={{ height: '100%' }} ref={mapRef}></div>;
+  return <div id="map" style={{ height: '100%' }} ref={mapRef} data-testid='pins-map'></div>;
 }
 
 Map.propTypes = {

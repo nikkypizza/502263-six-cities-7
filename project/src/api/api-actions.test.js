@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { createApi } from './api';
 import { ActionType } from '../store/action';
 import { APIRoute, AppRoute, AuthorizationStatus} from '../const';
-import { fetchAdComments, fetchAdsNearby, fetchFavouriteAds, fetchFullAdInfo, fetchOffers, postComment, setAuthStatus, setIsFavouriteAd } from './api-actions';
+import { fetchAdComments, fetchAdsNearby, fetchFavouriteAds, fetchFullAdInfo, fetchOffers, postComment, setAuthStatus, setIsFavouriteAd, login, logout } from './api-actions';
 import adaptAdFormat from '../adapters/ads';
 import adaptCommentFormat from '../adapters/comments';
 import { getIsFavouriteStatusCode } from '../util';
@@ -43,7 +43,7 @@ describe('Async operations', () => {
     api = createApi(() => {});
   });
 
-  describe('GET/AUTH_STATUS:', () => {
+  describe('GET/LOGIN:', () => {
 
     it('should make a correct API call', () => {
       const apiMock = new MockAdapter(api);
@@ -82,6 +82,88 @@ describe('Async operations', () => {
           payload: AppRoute.SERVER_ERROR,
         });
       });
+    });
+  });
+
+  describe('POST/LOGIN:', ()=>{
+    it('should make a correct API call', () => {
+      const apiMock = new MockAdapter(api);
+      const dispatch = jest.fn();
+      const fakeUser = {email: 'test@test.ru', password: '123456'};
+      const loginLoader = login(fakeUser);
+
+      apiMock.onPost(APIRoute.LOGIN).reply(200, [{fake: true}]);
+
+      return loginLoader(dispatch, () => {}, api)
+        .then(() => {
+          expect(dispatch).toHaveBeenCalledTimes(2);
+
+          expect(dispatch).toHaveBeenNthCalledWith(1, {
+            type: ActionType.LOGIN,
+            payload: [{fake: true}],
+          });
+
+          expect(dispatch).toHaveBeenNthCalledWith(2, {
+            type: ActionType.SET_AUTH_STATUS,
+            payload: AuthorizationStatus.AUTH,
+          });
+        });
+    });
+
+    it('should add token to localstorage', () => {
+      const apiMock = new MockAdapter(api);
+      const dispatch = jest.fn();
+      const fakeUser = {email: 'test@test.ru', password: '123456'};
+      const loginLoader = login(fakeUser);
+
+      apiMock.onPost(APIRoute.LOGIN).reply(200, [{fake: true}]);
+      Storage.prototype.setItem = jest.fn();
+
+      return loginLoader(dispatch, () => {}, api)
+        .then((token) => {
+          expect(Storage.prototype.setItem).toBeCalled();
+          expect(Storage.prototype.setItem).toBeCalledWith('token', token);
+        });
+    });
+  });
+
+  describe('POST/LOGOUT:', ()=>{
+    it('should make a correct API call', () => {
+      const apiMock = new MockAdapter(api);
+      const dispatch = jest.fn();
+      const logoutLoader = logout();
+
+      apiMock.onDelete(APIRoute.LOGOUT).reply(204, [{fake: true}]);
+
+      return logoutLoader(dispatch, () => {}, api)
+        .then(() => {
+          expect(dispatch).toHaveBeenCalledTimes(2);
+
+          expect(dispatch).toHaveBeenNthCalledWith(1, {
+            type: ActionType.LOGOUT,
+          });
+
+          expect(dispatch).toHaveBeenNthCalledWith(2, {
+            type: ActionType.SET_AUTH_STATUS,
+            payload: AuthorizationStatus.NO_AUTH,
+          });
+        });
+    });
+
+    it('should remove token to localstorage', () => {
+      const apiMock = new MockAdapter(api);
+      const dispatch = jest.fn();
+      const logoutLoader = logout();
+
+      apiMock.onDelete(APIRoute.LOGOUT).reply(204, [{fake: true}]);
+
+      Storage.prototype.removeItem = jest.fn();
+
+      return logoutLoader(dispatch, () => {}, api)
+        .then(() => {
+          expect(Storage.prototype.removeItem).toBeCalled();
+          expect(Storage.prototype.removeItem).toBeCalledWith('token');
+        });
     });
   });
 
