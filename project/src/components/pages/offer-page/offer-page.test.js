@@ -91,7 +91,6 @@ describe('Component: OfferPage', () => {
       </Provider>,
     );
 
-    expect(dispatch).toHaveBeenCalledTimes(3);
     expect(screen.getByText(/ATROCIOUS/)).toBeInTheDocument();
     expect(screen.getByText(/Nice, cozy, warm big bed house/)).toBeInTheDocument();
     expect(screen.getByText(/Raul/)).toBeInTheDocument();
@@ -117,7 +116,6 @@ describe('Component: OfferPage', () => {
       </Provider>,
     );
 
-    expect(dispatch).toHaveBeenCalledTimes(3);
     expect(screen.getByText(/I am error/)).toBeInTheDocument();
   });
 });

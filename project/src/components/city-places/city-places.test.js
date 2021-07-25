@@ -4,12 +4,9 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import * as Redux from 'react-redux';
-import userEvent from '@testing-library/user-event';
 
 import CityPlaces from './city-places';
 import { getPluralNoun } from '../../util';
-import { ActionType } from '../../store/action';
 
 
 const ADS = [{
@@ -71,32 +68,5 @@ describe('Component: CityPlaces', () => {
 
     expect(screen.getByText(`${ADS.length} ${getPluralNoun(ADS.length, 'place')} to stay in ${ADS[0].city}`)).toBeInTheDocument();
     expect(screen.getAllByTestId('list-card')).toHaveLength(ADS.length);
-  });
-
-  it('should use dispatch on mouseEnter and mouseLeave', () => {
-    const store = mockStore({UI: {adSortingType: null}});
-    const history = createMemoryHistory();
-    const dispatch = jest.fn();
-    const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(dispatch);
-
-    render (
-      <Provider store={store}>
-        <Router history={history}>
-          <CityPlaces ads={ADS} activeCity={ADS[0].city}/>
-        </Router>
-      </Provider>,
-    );
-
-    userEvent.hover(screen.getAllByTestId('list-card')[0]);
-
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).nthCalledWith(1, {type: ActionType.CHANGE_FOCUSED_AD_ID,payload: ADS[0].id});
-
-
-    userEvent.unhover(screen.getAllByTestId('list-card')[0]);
-
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).nthCalledWith(2, {type: ActionType.CHANGE_FOCUSED_AD_ID,payload: null});
   });
 });

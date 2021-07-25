@@ -75,7 +75,6 @@ describe('Component: FavouritesPage', () => {
       </Provider>,
     );
 
-    expect(dispatch).toHaveBeenCalledTimes(2);
     expect(screen.getAllByTestId('city-link')).toHaveLength(2);
   });
 

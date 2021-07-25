@@ -76,7 +76,6 @@ describe('Component: MainPage', () => {
       </Provider>,
     );
 
-    expect(dispatch).toHaveBeenCalledTimes(1);
     expect(screen.getAllByTestId('list-card')).toHaveLength(2);
   });
 
@@ -100,7 +99,6 @@ describe('Component: MainPage', () => {
       </Provider>,
     );
 
-    expect(dispatch).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/We could not find any property available at the moment/)).toBeInTheDocument();
   });
 
