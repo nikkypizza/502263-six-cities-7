@@ -14,12 +14,12 @@ const mockStore = configureStore();
 
 describe('Component: SortForm', () => {
   it('should render correctly', () => {
+    const history = createMemoryHistory();
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH},
       UI:  {adSortingType: null},
     });
 
-    const history = createMemoryHistory();
 
     render (
       <Provider store={store}>

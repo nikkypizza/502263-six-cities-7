@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 
 import ReviewForm from './review-form';
 
-
 const mockStore = configureStore();
 
 describe('Component: ReviewForm', () => {

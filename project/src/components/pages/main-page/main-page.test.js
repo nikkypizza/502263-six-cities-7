@@ -4,43 +4,11 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import * as Redux from 'react-redux';
 
-import OfferInfoWrapper from './offer-info-wrapper';
+import { AuthorizationStatus } from '../../../const';
 
-const REVIEWS = {
-  totalReviewsAmount: 20,
-  trimmedReviews: [{
-    id: 123,
-    author: {
-      name: 'Raul',
-      userPic: 'https://stevensegallery.com/54/54',
-    },
-    rating: 3,
-    date: '2010-01-11',
-    review: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-  },
-  {
-    id: 321,
-    author: {
-      name: 'Omar',
-      userPic: 'https://www.placecage.com/54/54',
-    },
-    rating: 1,
-    date: '1998-09-01',
-    review: 'ATROCIOUS!',
-  },
-  {
-    id: 333,
-    author: {
-      name: 'Nikolas',
-      userPic: 'https://www.stevensegallery.com/55/54',
-    },
-    rating: 5,
-    date: '2021-02-15',
-    review: 'Very nice!',
-  },
-  ],
-};
+import MainPage from './main-page';
 
 const ADS = [{
   id: 1,
@@ -64,7 +32,7 @@ const ADS = [{
 },
 {
   id: 2,
-  city: 'Cologne',
+  city: 'Paris',
   title: 'Nice, cozy, warm big bed house',
   descriptions: ['You will love it !'],
   photos: {
@@ -87,23 +55,51 @@ const ADS = [{
 
 const mockStore = configureStore();
 
-describe('Component: OfferInfoWrapper', () => {
+describe('Component: MainPage', () => {
   it('should render correctly', () => {
     const store = mockStore({
-      UI:  {isCommentPostError: null},
-      USER: {commentSendStatus: null},
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      DATA:  {ads: ADS, adsAreLoaded: true},
+      UI:  {activeCity: ADS[0].city, adSortingType: null},
     });
 
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
     const history = createMemoryHistory();
 
     render (
       <Provider store={store}>
         <Router history={history}>
-          <OfferInfoWrapper reviews={REVIEWS} info={ADS[0]} adsNearby={ADS} isAuth adId='1'/>
+          <MainPage/>
         </Router>
       </Provider>,
     );
 
-    expect(screen.getByText('Meet the host')).toBeInTheDocument();
+    expect(screen.getAllByTestId('list-card')).toHaveLength(2);
   });
+
+  it('should render CityPlacesEmpty if ads empty', () => {
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      DATA:  {ads: [], adsAreLoaded: true},
+      UI:  {activeCity: ADS[0].city, adSortingType: null},
+    });
+
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+    const history = createMemoryHistory();
+
+    render (
+      <Provider store={store}>
+        <Router history={history}>
+          <MainPage/>
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getByText(/We could not find any property available at the moment/)).toBeInTheDocument();
+  });
+
 });

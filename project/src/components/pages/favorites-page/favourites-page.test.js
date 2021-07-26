@@ -4,43 +4,11 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import * as Redux from 'react-redux';
 
-import OfferInfoWrapper from './offer-info-wrapper';
+import { AuthorizationStatus } from '../../../const';
 
-const REVIEWS = {
-  totalReviewsAmount: 20,
-  trimmedReviews: [{
-    id: 123,
-    author: {
-      name: 'Raul',
-      userPic: 'https://stevensegallery.com/54/54',
-    },
-    rating: 3,
-    date: '2010-01-11',
-    review: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-  },
-  {
-    id: 321,
-    author: {
-      name: 'Omar',
-      userPic: 'https://www.placecage.com/54/54',
-    },
-    rating: 1,
-    date: '1998-09-01',
-    review: 'ATROCIOUS!',
-  },
-  {
-    id: 333,
-    author: {
-      name: 'Nikolas',
-      userPic: 'https://www.stevensegallery.com/55/54',
-    },
-    rating: 5,
-    date: '2021-02-15',
-    review: 'Very nice!',
-  },
-  ],
-};
+import FavouritesPage from './favorites-page';
 
 const ADS = [{
   id: 1,
@@ -87,23 +55,49 @@ const ADS = [{
 
 const mockStore = configureStore();
 
-describe('Component: OfferInfoWrapper', () => {
+describe('Component: FavouritesPage', () => {
   it('should render correctly', () => {
     const store = mockStore({
-      UI:  {isCommentPostError: null},
-      USER: {commentSendStatus: null},
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      DATA:  {favouriteAds: ADS, favouriteAdsAreLoaded: true},
     });
 
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
     const history = createMemoryHistory();
 
     render (
       <Provider store={store}>
         <Router history={history}>
-          <OfferInfoWrapper reviews={REVIEWS} info={ADS[0]} adsNearby={ADS} isAuth adId='1'/>
+          <FavouritesPage/>
         </Router>
       </Provider>,
     );
 
-    expect(screen.getByText('Meet the host')).toBeInTheDocument();
+    expect(screen.getAllByTestId('city-link')).toHaveLength(2);
+  });
+
+  it('should render FavouritesListEmpty when no ads', () => {
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      DATA:  {favouriteAds: [], favouriteAdsAreLoaded: true},
+    });
+
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+    const history = createMemoryHistory();
+
+    render (
+      <Provider store={store}>
+        <Router history={history}>
+          <FavouritesPage/>
+        </Router>
+      </Provider>,
+    );
+
+    const contentElement = screen.getByText('Nothing yet saved.');
+    expect(contentElement).toBeInTheDocument();
   });
 });

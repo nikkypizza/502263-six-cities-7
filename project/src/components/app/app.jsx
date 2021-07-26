@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
 import { AppRoute, AuthorizationStatus } from '../../const.js';
+import withPrivateRoute from '../../hocs/with-private-route.jsx';
 
 import MainPage from '../pages/main-page/main-page.jsx';
 import LoginPage from '../pages/login-page/login-page.jsx';
@@ -11,7 +12,6 @@ import FavoritesPage from '../pages/favorites-page/favorites-page.jsx';
 import NotFoundPage from '../pages/not-found-page/not-found-page.jsx';
 import OfferPage from '../pages/offer-page/offer-page.jsx';
 import LoadWrapper from '../load-wrapper/load-wrapper.jsx';
-import withPrivateRoute from '../../hocs/withPrivateRoute.jsx';
 import ServerErrorPage from '../pages/server-error-page/server-error-page.jsx';
 
 

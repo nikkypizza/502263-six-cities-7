@@ -40,7 +40,7 @@ const setAuthStatus = () => (dispatch, _getState, api) => (
 const login = (userInput) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, userInput)
     .then(({data}) => {
-      localStorage.token = data.token;
+      localStorage.setItem('token', data.token);
       dispatch(userLogin(data));
       dispatch(setAuth(AuthorizationStatus.AUTH));
     }).catch((e) => {

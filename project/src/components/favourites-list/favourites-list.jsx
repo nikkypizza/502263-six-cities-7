@@ -23,7 +23,7 @@ function FavoritesList({ ads }) {
 
             <div className="favorites__locations locations locations--current">
               <div className="locations__item">
-                <Link className="locations__item-link" onClick={({ target }) => dispatch(changeCity(target.textContent))} to={AppRoute.ROOT}>
+                <Link className="locations__item-link" onClick={({ target }) => dispatch(changeCity(target.textContent))} to={AppRoute.ROOT} data-testid='city-link'>
                   <span>{key}</span>
                 </Link>
               </div>
