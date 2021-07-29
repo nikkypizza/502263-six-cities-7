@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_SETUP = {
   method: 'get',
-  baseURL: 'https://7.react.pages.academy/six-cities',
+  baseURL: 'https://8.react.pages.academy/six-cities',
   timeout: 5000,
   headers: {
     'X-Token': localStorage.token || '',
